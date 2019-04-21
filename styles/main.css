@@ -6,7 +6,7 @@
 body {
     width: 700px;
     margin: auto;
-    background-color: #17aaa5;
+    background-color: #8396cd;
 }
 
 /*медиа свойства - адаптивность*/
@@ -59,6 +59,7 @@ body {
 #box-2 {
     flex: 3;
     margin-left: 10px;
+    height: 1000px;
 }
 
 #box-3 {
@@ -101,4 +102,21 @@ body {
 
 h1{
     margin-top: 50%;
+}
+
+/*Кнопка вверх*/
+#toTop {
+    width:100px;
+    border:1px solid #ccc;
+    background:#f7f7f7;
+    text-align:center;
+    padding:5px;
+    position:fixed;
+    bottom:10px; /* отступ кнопки от нижнего края страницы*/
+    right:10px;
+    cursor:pointer;
+    display:none;
+    color:#333;
+    font-family:verdana;
+    font-size:11px;
 }
