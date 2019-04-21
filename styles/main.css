@@ -1,0 +1,104 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    width: 700px;
+    margin: auto;
+    background-color: #17aaa5;
+}
+
+/*медиа свойства - адаптивность*/
+/*будет работать для экранов которые больше чем 500 px*/
+@media (min-width: 500px) {
+    #container-header {
+        /*распологает блоки в ряд*/
+        display: flex;
+        flex-direction: row;
+        height: 50px;
+        /*обрезает блоки по тексту, прижимает к верху*/
+        /*align-items: flex-start;*/
+        /*если написано, то дочерние блоки не принимают размер родителя*/
+/*        align-items: center;*/
+        /*расположение блоков по центру*/
+/*        justify-content: center;*/
+        /*скрывать всё что не помещается в блок*/
+        overflow: hidden;
+        /*убирает перенос строк*/
+        /*white-space: nowrap;*/
+        /*добавляет многоточие*/
+        /*text-overflow: ellipsis;*/
+    }
+}
+
+#container-header>div:hover{
+    background-color: red;
+}
+
+#container-content {
+    display: flex;
+    flex-direction: row;
+    background-color: #4ea60b;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+
+.box-styles {
+    border: 1px solid black;
+}
+
+#box-1 {
+    /*изменяет размерность блока относительно других*/
+    flex: 1;
+    /*меняет положение блока относительно других*/
+    /*	order: 2;*/
+    height: 10px;
+}
+
+#box-2 {
+    flex: 3;
+    margin-left: 10px;
+}
+
+#box-3 {
+    flex: 1;
+    margin-left: 10px;
+}
+
+#container-bottom {
+    display: flex;
+    flex-direction: row;
+}
+
+#header-box1 {
+    flex: 1;
+/*    height: 100%;*/
+}
+
+#header-box2 {
+    flex: 3;
+    margin-left: 10px;
+}
+
+#header-box3 {
+    flex: 1;
+    margin-left: 10px;
+}
+
+
+#ssilka {
+    display: flex;
+/*    justify-content: center;*/
+    width: 100%;
+    height: 100%;
+/*    если есть распологает ребенка по середине, горизонтально*/
+    justify-content: center;
+/*    если есть то распологает ребенка внтури блока, по центу*/
+    align-items: center;
+    text-align: center;
+}
+
+h1{
+    margin-top: 50%;
+}
