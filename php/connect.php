@@ -1,4 +1,12 @@
 <?php
+    session_start();
+    if (!isset($_SESSION['count'])) {
+      $_SESSION['count'] = 0;
+    } else {
+      $_SESSION['count']++;
+    }
+    echo ($_SESSION['count']);
+
     $host = '127.0.0.1';
     $db   = 'vkr';
     $user = 'root';
@@ -15,25 +23,31 @@
     $pdo = new PDO($dsn, $user, $pass, $opt);
 //методом fetch(), который служит для последовательного получения строк из БД
 //Выполнение запроса
-    $stmt = $pdo->query('SELECT name FROM users');
+    $stmt = $pdo->query('SELECT login FROM users');
     while ($row = $stmt->fetch())
     {
-        echo $row['name'] . "\n";
+        echo $row['login'] . "\n";
     }
 
 //Если же в запрос передаётся хотя бы одна переменная, то этот запрос в обязательном порядке должен выполняться только через подготовленные выражения.
     $role = 0;
-    $stmt = $pdo->prepare('SELECT name FROM users WHERE role = ?');
+    $stmt = $pdo->prepare('SELECT login FROM users WHERE role = ?');
     $stmt->execute(array($role));
     while ($row = $stmt->fetch())
     {
-        echo $row['name']. "\n";
+        echo $row['login']. "\n";
     }
+    echo('/n');
 
-    $stmt = $pdo->prepare('SELECT name FROM users WHERE role = ?');
-    $stmt->execute([$_GET["0"]]);
+    $_GET['role'] = 0;
+    $stmt = $pdo->prepare('SELECT login FROM users WHERE role = ?');
+    $stmt->execute([$_GET['role']]);
     foreach ($stmt as $row)
     {
-        echo $row['name'] . "\n";
+        echo $row['login'] . "\n";
+    }
+
+    function foo() {
+        echo "В foo()<br />\n";
     }
 ?>
