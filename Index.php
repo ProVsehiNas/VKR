@@ -20,13 +20,13 @@
         </div>
         <div id="header-box2" class="box-styles">
             <div class="box-styles">
-                <a href="#">
-                    <div class='ssilka'>1 пункт меню</div>
+                <a href="http://localhost/vkr/php/session_destroy.php">
+                    <div id='button_destroy' class='ssilka'>Выход из сессии</div>
                 </a>
             </div>
             <div class="box-styles">
-                <a href="#">
-                    <div class='ssilka'>2 пункт меню</div>
+                <a href="http://localhost/vkr/index.php">
+                    <div class='ssilka'>Главная</div>
                 </a>
             </div>
         </div>
@@ -41,7 +41,24 @@
             1
         </div>
         <div id="box-2" class="box-styles">
-            2
+            <?php
+                if (empty($_SESSION['login'])){
+                    exit ('Вы не вошли на сайт');
+                }
+                else if ($_SESSION['role'] == 0){
+                    ?>
+                        <div id="sozdat_zakaz" class="functions ssilka">Создать заказ</div>
+                        <div Id="redactirovat_zakaz" class="functions ssilka roles">Редактировать заказ</div>
+                        <div class="functions ssilka roles">ПРИВЕТ ИЗ ДРУГОГО ОКНА</div>
+                    <?php
+                }
+
+                else if ($_SESSION['role'] == 1){
+                    ?>
+                        <div id="dobavit_polzovatelya" class="functions ssilka">Добавить пользователя</div>
+                    <?php
+                }
+            ?>
         </div>
         <div id="box-3" class="box-styles">
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, commodi!
@@ -72,38 +89,89 @@
     <div id="overlay" style="display: none;"></div><!-- Пoдлoжкa -->
     
     <?php
-        echo $_SESSION['login'];
-        echo $_SESSION['id'];
+//        echo('role = '.$_SESSION['role']);
+//        echo $_SESSION['login'];
+//        echo $_SESSION['id'];
         // Проверяем, пусты ли переменные логина и id пользователя
         if (empty($_SESSION['login']) or empty($_SESSION['id']))
         {
             //даем перемнной текст// Если пусты, то мы не выводим ссылку
-            $text = "Вы вошли на сайт, как гость<br><a href='#'>Эта ссылка  доступна только зарегистрированным пользователям</a>";
-        // Если пусты, то мы не выводим ссылку
-            echo("<script>$('#box-3').html('$text')</script>");
+            echo "Вы вошли на сайт, как гость<br><a href='#'>Эта ссылка  доступна только зарегистрированным пользователям</a>";
         }
         else
         {
-
-        // Если не пусты, то мы выводим ссылку
-        echo "Вы вошли на сайт, как ".$_SESSION['login']."<br><a  href='http://tvpavlovsk.sk6.ru/'>Эта ссылка доступна только  зарегистрированным пользователям</a>";
+            // Если не пусты, то мы выводим ссылку
+            echo "Вы вошли на сайт, как ".$_SESSION['login']."<br><a  href='http://tvpavlovsk.sk6.ru/'>Эта ссылка доступна только  зарегистрированным пользователям</a>";
         }
     ?>
     
     <script>
+        //Скрипт выгрузки данных на основании роли
+//        $(document).click(function(){
+//            $.ajax({
+//                type: "POST",
+//                url: 'php/dannie_o_role.php',
+//                success: function(data){
+//                    $('#box-2').html(data);
+//                }
+//            })                  
+//        });
+//        
+//        JQUERY4U = {
+//	multiply: function(x,y) {
+//		return (x * y);
+//	}
+//}
+////function call
+//JQUERY4U.multiply(2,2);
+////     
+        JQUERY4U = {
+            Ispolzovanie_funczii: function($url){
+                $.ajax({
+                    type: "POST",
+                    url: $url,
+                    success: function(data){
+                        $('#box-2').html(data);
+                    }
+               })
+            }
+        }
+        
+        $(document).ready(function(){
+            $('#sozdat_zakaz').click(function(){
+                $url = 'php/sozdat_zakaz.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+            })
+            $('#redactirovat_zakaz').click(function(){
+                $url = 'php/redactirovat_zakaz.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+            })      
+            $('#dobavit_polzovatelya').click(function(){
+                $url = 'php/dobavit_polzovatelya.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+            })                
+        });
+//        $(document).ready(function(){
+//            $('.sozdat_zakaz').click(function(){
+//                $url = 'php/sozdat_zakaz.php';
+//            })
+//        })
+//        $('#button_destroy').click(function(){
+//            window.location = "http://localhost/vkr/php/session_destroy.php";
+//        });
         // по окончанию загрузки страницы
 //        $(document).ready(function(){
             // вешаем на клик по элементу с id = example-1
         //Вызываем процедуру с помощью Ajax    
-        $('.goy').click(function(){
-                $.ajax({
-                    type: "POST",
-                    url: 'php/connect.php',
-                    success: function(data) {
-                        $('#box-2').html(data);
-                    }            
-                }) 
-            });
+//        $('.goy').click(function(){
+//                $.ajax({
+//                    type: "POST",
+//                    url: 'php/connect.php',
+//                    success: function(data) {
+//                        $('#box-2').html(data);
+//                    }            
+//                }) 
+//            });
         //Открытием модального окна
         $(document).ready(function() { // вся мaгия пoсле зaгрузки стрaницы
             $('.goy').click( function(event){ // лoвим клик пo ссылки с id="go"

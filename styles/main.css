@@ -57,13 +57,12 @@ body {
     flex: 1;
     /*меняет положение блока относительно других*/
     /*	order: 2;*/
-    height: 50px;
 }
 
 #box-2 {
     flex: 3;
     margin-left: 10px;
-    height: 5000px;
+    height: auto;
 }
 
 #box-3 {
@@ -185,4 +184,9 @@ h1{
 /*    если есть то распологает ребенка внтури блока, по центу*/
     align-items: center;
     text-align: center;
+}
+
+.functions {
+    flex-direction: column;
+    height: 100px;
 }

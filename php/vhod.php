@@ -23,28 +23,34 @@
     //$myrow = mysql_fetch_array($result);
     $_GET['login'] = $login;
     $result = $pdo -> prepare ("SELECT * FROM users WHERE login = ?");
-    $result -> execute([$_GET['login']]);
+    $result -> execute([$_GET['login']]); 
     
-    foreach($result as $row){
-            echo $row['login'];
-
-    if (empty($row['password']))
-    {
-    //если пользователя с введенным логином не существует
-    exit ("Извините, введённый вами login или пароль неверный.");
+    if ($result->rowCount() == 0) {
+        echo ('Такого логина не существует!');
+        header("refresh: 3; url=http://localhost/vkr/index.php");
+    } else {
+        foreach($result as $row){
+    //echo $row['login'];
+        if ($result->rowCount() == 0){
+                //если пользователя с введенным логином не существует
+                exit ("Извините, введённый вами login или пароль неверный.");
+                header("refresh: 3; url=http://localhost/vkr/index.php");
+                }
+            else {
+                //если существует, то сверяем пароли
+                if ($row['password']==$password) {
+                    //если пароли совпадают, то запускаем пользователю сессию! Можете его поздравить, он вошел!
+                    $_SESSION['role']=$row['role'];
+                    $_SESSION['login']=$row['login']; 
+                    $_SESSION['id']=$row['id'];//эти данные очень часто используются, вот их и будет "носить с собой" вошедший пользователь
+                    echo "Вы успешно вошли на сайт! Вы будете возрашены на главную страницу автоматически через 3 секунды"; header("refresh: 3; url=http://localhost/vkr/index.php");
+                }
+                else {
+                    //если пароли не сошлись
+                    exit ("Извините, введённый вами login или пароль неверный.");
+                    header("refresh: 3; url=http://localhost/vkr/index.php");
+                }
+            }
+        }   
     }
-    else {
-    //если существует, то сверяем пароли
-    if ($row['password']==$password) {
-    //если пароли совпадают, то запускаем пользователю сессию! Можете его поздравить, он вошел!
-    $_SESSION['login']=$row['login']; 
-    $_SESSION['id']=$row['id'];//эти данные очень часто используются, вот их и будет "носить с собой" вошедший пользователь
-    echo "Вы успешно вошли на сайт! <a href='..index.php'>Главная страница</a>";
-    }
-    else {
-    //если пароли не сошлись
-    exit ("Извините, введённый вами login или пароль неверный.");
-    }
-    }
-}
 ?>
