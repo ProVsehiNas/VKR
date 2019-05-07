@@ -7,7 +7,7 @@
 body {
     width: 700px;
     margin: auto;
-    background-color: #8396cd;
+    background-color: rgba(69, 71, 74, 0.66);
 }
 
 /*медиа свойства - адаптивность*/
@@ -18,6 +18,7 @@ body {
         display: flex;
         flex-direction: row;
         height: 50px;
+        background-color: #FFA500;
         /*обрезает блоки по тексту, прижимает к верху*/
         /*align-items: flex-start;*/
         /*если написано, то дочерние блоки не принимают размер родителя*/
@@ -37,13 +38,15 @@ body {
 .ssilka:hover{
     background-color: yellow;
     cursor: pointer;
-    
+    background-color: #FF8C00;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    transition-duration: 0.5s;
 }
 
 #container-content {
     display: flex;
     flex-direction: row;
-    background-color: #4ea60b;
+    background-color: #5f645b;
     margin-top: 10px;
     margin-bottom: 10px;
 }
@@ -99,6 +102,7 @@ body {
 /*    justify-content: center;*/
     width: 100%;
     height: 100%;
+    transition-duration: 0.5s;
 /*    если есть распологает ребенка по середине, горизонтально*/
     justify-content: center;
 /*    если есть то распологает ребенка внтури блока, по центу*/
@@ -189,4 +193,66 @@ h1{
 .functions {
     flex-direction: column;
     height: 100px;
+}
+
+.for_all_windows {
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+/*    align-content: center;*/
+/*    align-items: center;*/
+}
+
+input{
+    width: 100%;
+    padding: 12px 20px;
+/*    margin: 8px 0;*/
+    box-sizing: border-box;
+    background-color: #FFA500;
+    border: none;
+}
+
+input[type=text] { 
+/*    color: white;*/
+}
+
+input:focus {
+/*    border: 3px solid #555;*/
+    background-color: #FF8C00;
+}
+
+select {
+  width: 100%;
+  padding: 16px 20px;
+  border: none;
+/*  border-radius: 4px;*/
+  background-color: #FFA500;
+}
+
+input[type=button], input[type=submit], input[type=reset] {
+  background-color: #FFA500;
+  border: none;
+/*  color: white;*/
+  padding: 16px 32px;
+  text-decoration: none;
+/*  margin: 4px 2px;*/
+  cursor: pointer;
+    transition-duration: 0.5s;
+}
+
+input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
+    background-color: #FF8C00;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    transition-duration: 0.5s;
+}
+
+label{
+    text-align: left;
+}
+p{
+    text-align: left;
+    margin: 10px 5px;
+}
+.just-text {
+    margin: 5px;
 }

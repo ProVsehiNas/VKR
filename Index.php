@@ -25,8 +25,13 @@
                 </a>
             </div>
             <div class="box-styles">
+                <a href="#">
+                    <div class="ssilka">Профиль</div>
+                </a>
+            </div>
+            <div class="box-styles">
                 <a href="http://localhost/vkr/index.php">
-                    <div class='ssilka'>Главная</div>
+                    <div class='ssilka'>Назад</div>
                 </a>
             </div>
         </div>
@@ -43,11 +48,11 @@
         <div id="box-2" class="box-styles">
             <?php
                 if (empty($_SESSION['login'])){
-                    exit ('Вы не вошли на сайт');
+                    echo ('Вы не вошли на сайт');
                 }
                 else if ($_SESSION['role'] == 0){
                     ?>
-                        <div id="sozdat_zakaz" class="functions ssilka">Создать заказ</div>
+                        <div id="dobavit_polzovatelya" class="functions ssilka">Добавить пользователя</div>
                         <div Id="redactirovat_zakaz" class="functions ssilka roles">Редактировать заказ</div>
                         <div class="functions ssilka roles">ПРИВЕТ ИЗ ДРУГОГО ОКНА</div>
                     <?php
@@ -55,13 +60,13 @@
 
                 else if ($_SESSION['role'] == 1){
                     ?>
-                        <div id="dobavit_polzovatelya" class="functions ssilka">Добавить пользователя</div>
+                        <div id="sozdat_zakaz" class="functions ssilka">Создать заказ</div>
                     <?php
                 }
             ?>
         </div>
         <div id="box-3" class="box-styles">
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, commodi!
+            <p class="just-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam asperiores similique aut beatae dolore quo nobis fugit, sed est voluptatem!</p>
         </div>
     </div>
     <div id="container-bottom">
@@ -138,16 +143,16 @@
         }
         
         $(document).ready(function(){
-            $('#sozdat_zakaz').click(function(){
-                $url = 'php/sozdat_zakaz.php';
+            $('#dobavit_polzovatelya').click(function(){
+                $url = 'php/dobavit_polzovatelya.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
             })
             $('#redactirovat_zakaz').click(function(){
                 $url = 'php/redactirovat_zakaz.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
             })      
-            $('#dobavit_polzovatelya').click(function(){
-                $url = 'php/dobavit_polzovatelya.php';
+            $('#sozdat_zakaz').click(function(){
+                $url = 'php/sozdat_zakaz.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
             })                
         });
