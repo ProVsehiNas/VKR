@@ -12,6 +12,7 @@
     <script src="scripts/sctipts.js"></script>
 </head>
 <body>
+    <img id="logos" src="images/Top.png" alt="">
     <div id="container-header">
         <div id="header-box1" class="box-styles">
 <!--            <a href="#" id="test">-->
@@ -154,8 +155,14 @@
             $('#sozdat_zakaz').click(function(){
                 $url = 'php/sozdat_zakaz.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
-            })                
+            })
         });
+            $(document).scroll(function(){
+                if($(this).scrollTop() != 0){
+//                    document.getElementById('contaner-header').style.position = 'fixed';
+ 
+                }
+            })
 //        $(document).ready(function(){
 //            $('.sozdat_zakaz').click(function(){
 //                $url = 'php/sozdat_zakaz.php';

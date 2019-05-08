@@ -5,8 +5,8 @@
 }
 
 body {
-    width: 700px;
-    margin: auto;
+/*    width: 700px;*/
+/*    margin: auto;*/
     background-color: rgba(69, 71, 74, 0.66);
 }
 
@@ -17,7 +17,7 @@ body {
         /*распологает блоки в ряд*/
         display: flex;
         flex-direction: row;
-        height: 50px;
+        height: 30px;
         background-color: #FFA500;
         /*обрезает блоки по тексту, прижимает к верху*/
         /*align-items: flex-start;*/
@@ -41,18 +41,23 @@ body {
     background-color: #FF8C00;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     transition-duration: 0.5s;
+    color: white;
 }
 
 #container-content {
     display: flex;
     flex-direction: row;
     background-color: #5f645b;
+    margin-left: auto;
+    margin-right: auto;
     margin-top: 10px;
     margin-bottom: 10px;
+    width: 1000px;
+    height: 2000px;
 }
 
 .box-styles {
-    border: 1px solid black;
+/*    border: 1px solid black;*/
 }
 
 #box-1 {
@@ -255,4 +260,21 @@ p{
 }
 .just-text {
     margin: 5px;
+}
+
+a{
+    text-decoration: none;
+    color: black;
+}
+
+img{
+    margin: 0;
+    padding: 0;
+}
+#logos {
+    width: 100%;
+}
+
+#dlya_vizova_funczii {
+    display: none;
 }
