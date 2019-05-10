@@ -47,7 +47,7 @@ body {
 #container-content {
     display: flex;
     flex-direction: row;
-    background-color: #5f645b;
+/*    background-color: #5f645b;*/
     margin-left: auto;
     margin-right: auto;
     margin-top: 10px;
@@ -76,6 +76,7 @@ body {
 #box-3 {
     flex: 1;
     margin-left: 10px;
+    background-color: #5f645b;
 }
 
 #container-bottom {
@@ -276,5 +277,31 @@ img{
 }
 
 #dlya_vizova_funczii {
+    display: none;
+}
+
+.news {
+    background-color: #c7e2e2;
+    height: 100px;
+    width: calc(100% - 40px);
+    margin: 10px;
+    padding: 10px;
+    text-align: center;
+    overflow: hidden;
+}
+
+.button {
+    background-color: yellow;
+    background-color: #FFA500;
+}
+
+.buttons {
+    display: flex;
+    flex-direction: row;
+    height: 50px;
+    width: 100%;
+}
+
+.hidden {
     display: none;
 }

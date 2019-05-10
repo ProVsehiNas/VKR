@@ -1,5 +1,7 @@
 <?php
     session_start();
+//    $_SESSION['save_news'] = 0;
+    $save_news = $_SESSION['save_news'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -12,6 +14,7 @@
     <script src="scripts/sctipts.js"></script>
 </head>
 <body>
+    <div class="hidden" data-save_news='<?= $save_news ?>'></div>
     <img id="logos" src="images/Top.png" alt="">
     <div id="container-header">
         <div id="header-box1" class="box-styles">
@@ -67,7 +70,8 @@
             ?>
         </div>
         <div id="box-3" class="box-styles">
-            <p class="just-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Aliquam asperiores similique aut beatae dolore quo nobis fugit, sed est voluptatem!</p>
+           <?php include 'php/news.php';?>
+           <div class="block-news"></div>
         </div>
     </div>
     <div id="container-bottom">
@@ -142,8 +146,38 @@
                })
             }
         }
+        JQERY4UU = {
+            Vizov_funczii: function($url, $name_of_method, $count){
+                $.ajax({
+                    type: "POST",
+                    url: $url,
+                    data: {method : $name_of_method, count : $count},
+                    success: function(data){
+                        $('.block-news').html(data);
+                    }
+               })
+            }
+        }
+        JQERY4UUU = {
+            skritie_knopol : function($count){
+                if(($count == 0) || ($count < 0)){$('#Nazad').css("display", "none");}else{$('#Nazad').css("display", "flex");;}
+                var save_news = $('div.hidden').data('save_news');
+                if($count >= save_news - 1){$('#dallee').css("display", "none");}else{$('#dallee').css("display", "flex");}
+            }
+        }
+//        Показываем новости
+        $url = 'php/here_i_can_test_php_scripts.php';
+        $name_of_method = 'news';
         
+//        alert(sessionStorage.getItem('key'));
+        if(sessionStorage.getItem('key') != 0){$count = sessionStorage.getItem('key');} else{$count = 0;}
+//        $count = 0;
+        JQERY4UU.Vizov_funczii($url, $name_of_method, $count);
+        JQERY4UUU.skritie_knopol($count);
+//        if($count == 0){$('#Nazad').fadeOut()}else{$('#dallee').fadeIn();}
+//        Функции нажатия на кнопочки
         $(document).ready(function(){
+            
             $('#dobavit_polzovatelya').click(function(){
                 $url = 'php/dobavit_polzovatelya.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
@@ -155,6 +189,26 @@
             $('#sozdat_zakaz').click(function(){
                 $url = 'php/sozdat_zakaz.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
+            })
+            $('#dallee').click(function(){
+                $url = 'php/here_i_can_test_php_scripts.php';
+                $name_of_method = 'news';
+                $count = $count + 3;
+                var countY = $count;
+                sessionStorage.setItem('key', countY);
+                JQERY4UU.Vizov_funczii($url, $name_of_method, $count);
+                JQERY4UUU.skritie_knopol($count);
+                
+            })
+            $('#Nazad').click(function(){
+                $url = 'php/here_i_can_test_php_scripts.php';
+                $name_of_method = 'news';
+                $count = $count - 3;
+                var countX = $count; 
+                sessionStorage.setItem('key', countX);
+                JQERY4UU.Vizov_funczii($url, $name_of_method, $count);
+                JQERY4UUU.skritie_knopol($count);
+                
             })
         });
             $(document).scroll(function(){
