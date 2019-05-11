@@ -4,7 +4,7 @@
     </head>
 <body>
 <div class="for_all_windows">
-<h2>Добавить пользователя</h2>
+<h2>Создать заказ</h2>
 <!--Будем работать с ajax-->
 <form action="" method="post" id="ajax_form">
     <!--**** save_user.php - это адрес обработчика.  То есть, после нажатия на кнопку "Зарегистрироваться", данные из полей  отправятся на страничку save_user.php методом "post" ***** -->
@@ -58,8 +58,7 @@
 </p>
 -->
 <!--**** В поле для паролей (name="password" type="password") пользователь вводит свой пароль ***** --> 
-<br>
-<p>  
+<p><br>
     <input type="submit" value="Зрегестрировать пользоватлея" id="btn" name="sozdat_zakaz">
 <!--**** Кнопочка (type="submit") отправляет данные на страничку save_user.php ***** --> 
 </p></form>

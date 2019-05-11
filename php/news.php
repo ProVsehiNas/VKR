@@ -9,12 +9,12 @@
                 $i++;
             }
 //    echo('Привет');
-    echo($i);
+//    echo($i);
     $_SESSION['save_news'] = $i;
 //    }
     if($i > 3){
         $kolichestvo_stranic = $i / 3;
-         echo(ceil($kolichestvo_stranic));
+//         echo(ceil($kolichestvo_stranic));
         ?>
           <div class="buttons">
                <div class="button ssilka" id="Nazad">
@@ -26,26 +26,6 @@
             </div>
         <?php
     }
-    function pokazat_news($nachalo){
-//        $stmt = $dbh->prepare("SELECT * FROM news LIMIT (nachalo), (konec) VALUES (?, ?)");
-//        $stmt->bindParam(':nachalo', $nachalo);
-//        $stmt->bindParam(':konec', $konec);
-        include ("db.php");
-//        $nachalo = 0;
-        $konec = 3;
-        $stmt = $dbh->prepare("SELECT * FROM news LIMIT $nachalo, $konec");
-//        $stmt->bindParam(1, $nachalo);
-//        $stmt->bindParam(2, $konec);
-        $nachalo = $nachalo + 3;
-        
-        $stmt->execute();
-        
-        while ($row = $stmt->fetch()) {
-                echo ($row['article']);
-        }
-    }
-    pokazat_news(0);
-    pokazat_news(0);
 ?>
 <script>
 

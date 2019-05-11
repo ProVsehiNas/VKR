@@ -53,7 +53,7 @@ body {
     margin-top: 10px;
     margin-bottom: 10px;
     width: 1000px;
-    height: 2000px;
+/*    height: 2000px;*/
 }
 
 .box-styles {
@@ -65,18 +65,21 @@ body {
     flex: 1;
     /*меняет положение блока относительно других*/
     /*	order: 2;*/
+    background-color: #5f645b;
 }
 
 #box-2 {
     flex: 3;
     margin-left: 10px;
-    height: auto;
+/*    height: 1000px;*/
+    background-color: #5f645b;
 }
 
 #box-3 {
     flex: 1;
     margin-left: 10px;
     background-color: #5f645b;
+
 }
 
 #container-bottom {
@@ -198,7 +201,9 @@ h1{
 
 .functions {
     flex-direction: column;
-    height: 100px;
+    height: 60px;
+    background-color: #FFA500;
+    margin-bottom: 10px;
 }
 
 .for_all_windows {
@@ -207,6 +212,7 @@ h1{
     text-align: center;
 /*    align-content: center;*/
 /*    align-items: center;*/
+    margin: 10px;
 }
 
 input{
@@ -257,7 +263,8 @@ label{
 }
 p{
     text-align: left;
-    margin: 10px 5px;
+/*    margin: 10px 5px;*/
+/*    overflow: hidden;*/
 }
 .just-text {
     margin: 5px;
@@ -298,7 +305,7 @@ img{
 .buttons {
     display: flex;
     flex-direction: row;
-    height: 50px;
+    height: 30px;
     width: 100%;
 }
 

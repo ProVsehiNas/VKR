@@ -1,11 +1,12 @@
 <?php
     session_start();
 //    $_SESSION['save_news'] = 0;
-    $save_news = $_SESSION['save_news'];
+//    $save_news = $_SESSION['save_news'];
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
     <meta charset="UTF-8">
     <title>Document</title>
     <link rel="stylesheet" href="styles/main.css">
@@ -14,7 +15,7 @@
     <script src="scripts/sctipts.js"></script>
 </head>
 <body>
-    <div class="hidden" data-save_news='<?= $save_news ?>'></div>
+<!--    <div class="hidden" data-save_news='<?= $save_news ?>'></div>-->
     <img id="logos" src="images/Top.png" alt="">
     <div id="container-header">
         <div id="header-box1" class="box-styles">
@@ -67,10 +68,17 @@
                         <div id="sozdat_zakaz" class="functions ssilka">Создать заказ</div>
                     <?php
                 }
+                else if ($_SESSION['role'] == 2){
+                    ?>
+                        <div id="vzyat_zakaz" class="functions ssilka">Взять заказ</div>
+                    <?php
+                }
             ?>
         </div>
         <div id="box-3" class="box-styles">
            <?php include 'php/news.php';?>
+           <?php $save_news = $_SESSION['save_news'];?>
+           <div class="hidden" data-save_news='<?= $save_news ?>'></div>
            <div class="block-news"></div>
         </div>
     </div>
@@ -86,12 +94,12 @@
         <span id="modal_close">X</span> <!-- Кнoпкa зaкрыть --> 
         <!-- Тут любoе сoдержимoе -->
          <div id="forma-otpravki-dannih">
-              <h2>Добавить пользователя/n</h2>
+              <h2>Вход</h2><br><br>
               <form action="php/vhod.php" method="post">
                <p>
                    Введите логин: <input name="login" type="text" size="15" maxlength="15"> 
                    Введите пароль:<input name="password" type="password" size="15" maxlength="15">
-               </p>
+               </p><br>
                <p><input type="submit" name="submit" value="Войти"></p>
               </form>
          </div>
@@ -160,9 +168,10 @@
         }
         JQERY4UUU = {
             skritie_knopol : function($count){
-                if(($count == 0) || ($count < 0)){$('#Nazad').css("display", "none");}else{$('#Nazad').css("display", "flex");;}
+                if(($count == 0) || ($count < 0)){$('#Nazad').css("display", "none");}else{$('#Nazad').css("display", "flex");}
                 var save_news = $('div.hidden').data('save_news');
-                if($count >= save_news - 1){$('#dallee').css("display", "none");}else{$('#dallee').css("display", "flex");}
+//                alert(save_news);
+                if($count >= save_news - 3){$('#dallee').css("display", "none");}else{$('#dallee').css("display", "flex");}
             }
         }
 //        Показываем новости
@@ -170,7 +179,7 @@
         $name_of_method = 'news';
         
 //        alert(sessionStorage.getItem('key'));
-        if(sessionStorage.getItem('key') != 0){$count = sessionStorage.getItem('key');} else{$count = 0;}
+        if((sessionStorage.getItem('key') != 0) && (sessionStorage.getItem('key') != null)){$count = sessionStorage.getItem('key');} else{$count = 0;}
 //        $count = 0;
         JQERY4UU.Vizov_funczii($url, $name_of_method, $count);
         JQERY4UUU.skritie_knopol($count);
@@ -190,12 +199,15 @@
                 $url = 'php/sozdat_zakaz.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
             })
+            $('#vzyat_zakaz').click(function(){
+                $url = 'php/vzyat_zakaz.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+            })            
             $('#dallee').click(function(){
                 $url = 'php/here_i_can_test_php_scripts.php';
                 $name_of_method = 'news';
-                $count = $count + 3;
-                var countY = $count;
-                sessionStorage.setItem('key', countY);
+                $count = Number($count) + Number(3);
+                sessionStorage.setItem('key', $count);
                 JQERY4UU.Vizov_funczii($url, $name_of_method, $count);
                 JQERY4UUU.skritie_knopol($count);
                 
@@ -203,9 +215,8 @@
             $('#Nazad').click(function(){
                 $url = 'php/here_i_can_test_php_scripts.php';
                 $name_of_method = 'news';
-                $count = $count - 3;
-                var countX = $count; 
-                sessionStorage.setItem('key', countX);
+                $count = Number($count) - Number(3);
+                sessionStorage.setItem('key', $count);
                 JQERY4UU.Vizov_funczii($url, $name_of_method, $count);
                 JQERY4UUU.skritie_knopol($count);
                 

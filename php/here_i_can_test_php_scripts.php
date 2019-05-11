@@ -20,7 +20,7 @@
                 ?>
                     <div class="news">
                         <a href=""><h3><?php echo($row['article']) ?></h3></a>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quibusdam, recusandae!</p>
+                        <p>Lorem ipsum dolodsadsdsdsadsar sit amet, tur adipisicing elit. Quibusdam, rae!</p>
                     </div>
                 <?php
             }
