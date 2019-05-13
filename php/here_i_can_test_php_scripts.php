@@ -5,7 +5,7 @@
        //        $stmt = $dbh->prepare("SELECT * FROM news LIMIT (nachalo), (konec) VALUES (?, ?)");
 //        $stmt->bindParam(':nachalo', $nachalo);
 //        $stmt->bindParam(':konec', $konec);
-            include ("db.php"); 
+            include ("connect_to_bd.php"); 
             $nachalo = $_POST["count"];
             $konec = 3;
             $stmt = $dbh->prepare("SELECT * FROM news LIMIT $nachalo, $konec");

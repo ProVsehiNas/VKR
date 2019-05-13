@@ -14,4 +14,8 @@
     if ($_POST['vizov_funczii'] == 'sozdat_zakaz'){
         sozdat_zakaz();
     }
+    if ($_POST['vizov_funczii'] == 'make_order'){
+        make_order();
+    }
+    
 ?>

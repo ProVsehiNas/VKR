@@ -1,5 +1,5 @@
 <?php
-    include ("db.php");
+    include ("connect_to_bd.php");
     $i = 0;
     $stmt = $dbh->prepare("SELECT * FROM news");
 //    if ($stmt->execute(array($_POST['login']))) {

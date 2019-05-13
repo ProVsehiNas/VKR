@@ -6,9 +6,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta charset="UTF-8">
     <title>Document</title>
+    <meta charset="UTF-8">
     <link rel="stylesheet" href="styles/main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <script src="scripts/jquery-3.4.0.min.js"></script>
@@ -143,6 +142,7 @@
 ////function call
 //JQUERY4U.multiply(2,2);
 ////     
+        
         JQUERY4U = {
             Ispolzovanie_funczii: function($url){
                 $.ajax({
@@ -188,7 +188,7 @@
         $(document).ready(function(){
             
             $('#dobavit_polzovatelya').click(function(){
-                $url = 'php/dobavit_polzovatelya.php';
+                $url = 'php/sozdat_zakazREGHERE.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
             })
             $('#redactirovat_zakaz').click(function(){
@@ -196,7 +196,7 @@
                 JQUERY4U.Ispolzovanie_funczii($url);
             })      
             $('#sozdat_zakaz').click(function(){
-                $url = 'php/sozdat_zakaz.php';
+                $url = 'php/make_order.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
             })
             $('#vzyat_zakaz').click(function(){

@@ -22,7 +22,7 @@
     //$result = mysql_query("SELECT * FROM users WHERE login='$login'",$db); //извлекаем из базы все данные о пользователе с введенным логином
     //$myrow = mysql_fetch_array($result);
     $_GET['login'] = $login;
-    $result = $pdo -> prepare ("SELECT * FROM users WHERE login = ?");
+    $result = $dbh -> prepare ("SELECT * FROM users WHERE login = ?");
     $result -> execute([$_GET['login']]); 
     
     if ($result->rowCount() == 0) {

@@ -12,5 +12,5 @@
         PDO::ATTR_EMULATE_PREPARES   => false,
             ];
 //    В результате мы получаем переменную $pdo, с которой и работаем далее на протяжении всего скрипта.
-    $pdo = new PDO($dsn, $user, $pass, $opt);
+    $dbh = new PDO($dsn, $user, $pass, $opt);
 ?>
