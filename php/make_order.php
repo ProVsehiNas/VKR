@@ -51,7 +51,7 @@
             <input type="checkbox" name="complect_4" value="guide">Руководство по эксплуатации<br>     
         </p>
         <p><br>
-            <input type="submit" value="Зрегестрировать пользоватлея" id="btn" name="sozdat_zakaz">
+            <input type="submit" value="Создать заказ" id="btn" name="sozdat_zakaz">
         </p>
     </form>
 </div>

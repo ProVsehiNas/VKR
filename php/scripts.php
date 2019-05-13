@@ -65,4 +65,9 @@
             die();
         }        
     }
+
+    function vzyat_zakaz(){
+        echo  ('podoraz   dsa  ');
+        echo($_POST['add_zakaz']);
+    }
 ?>

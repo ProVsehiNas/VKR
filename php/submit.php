@@ -17,5 +17,8 @@
     if ($_POST['vizov_funczii'] == 'make_order'){
         make_order();
     }
+    if ($_POST['vizov_funczii'] == 'vzyat_zakaz'){
+        vzyat_zakaz();
+    }
     
 ?>

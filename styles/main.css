@@ -314,3 +314,29 @@ img{
 .hidden {
     display: none;
 }
+
+.orders {
+    display: flex;
+    height: 90px;
+/*    widows: 100%;*/
+    flex-direction: row;
+    background-color: aqua;
+    margin-bottom: 10px;
+    background-color: #c7e2e2;
+}
+
+.orders>div{
+    display: flex;
+/*    justify-content: center;*/
+    width: 100%;
+    height: 100%;
+    transition-duration: 0.5s;
+/*    если есть распологает ребенка по середине, горизонтально*/
+    justify-content: center;
+/*    если есть то распологает ребенка внтури блока, по центу*/
+    align-items: center;
+    text-align: center;
+}
+.button_click:hover {
+    background-color: #FFA500;
+}
