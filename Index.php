@@ -70,6 +70,7 @@
                 else if ($_SESSION['role'] == 2){
                     ?>
                         <div id="vzyat_zakaz" class="functions ssilka">Взять заказ</div>
+                        <div id="moi_zakazi" class="functions ssilka">Мои заказы</div>
                     <?php
                 }
             ?>
@@ -201,6 +202,10 @@
             })
             $('#vzyat_zakaz').click(function(){
                 $url = 'php/vzyat_zakaz.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+            })
+            $('#moi_zakazi').click(function(){
+                $url = 'php/moi_zakazi.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
             })            
             $('#dallee').click(function(){

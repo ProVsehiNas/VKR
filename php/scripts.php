@@ -40,7 +40,7 @@
     }
     
     function make_order(){
-        var_dump($_SESSION['login']);
+//        var_dump($_SESSION['id']);
         
         if (isset($_POST['client'])) { $client = $_POST['client']; if ($client == '') { unset($client);} }
         if (isset($_POST['phone_number'])) { $phone_number=$_POST['phone_number']; if ($phone_number =='') { unset($phone_number);} }
@@ -53,11 +53,12 @@
         include ("connect_to_bd.php");
         
         try {
-        $stmt = $dbh->prepare("INSERT INTO orders (client, phone_number) VALUES (?, ?)");
+        $stmt = $dbh->prepare("INSERT INTO orders (client, phone_number, maked) VALUES (?, ?, ?)");
         $stmt->bindParam(1, $client);
         $stmt->bindParam(2, $phone_number);
+        $stmt->bindParam(3, $_SESSION['id']);
         $stmt->execute();
-        echo ("Заказ успешно создан");
+        echo ("Заказ успешно создан. ");
         $dbh = null;
         }
         catch(PDOException $e){
@@ -67,7 +68,14 @@
     }
 
     function vzyat_zakaz(){
-        echo  ('podoraz   dsa  ');
-        echo($_POST['add_zakaz']);
+//        echo  ('podoraz   dsa  ');
+//        echo($_POST['add_zakaz']);
+        include ("connect_to_bd.php");
+        $executor = $_SESSION['id'];
+        $stmt = $dbh->prepare("UPDATE orders SET executor = $executor WHERE id = ?"); 
+//        $stmt -> bindParam(1, $_SESSION['id']);
+//        $stmt -> bindParam(2, $_POST['add_zakaz']);
+        $stmt->execute(array($_POST['add_zakaz']));
+        echo ("Заказ успешно принят");
     }
 ?>

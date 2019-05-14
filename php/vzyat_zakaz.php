@@ -1,6 +1,6 @@
 <?php
     include("connect_to_bd.php");
-    $stmp = $dbh -> prepare("SELECT * FROM orders");
+    $stmp = $dbh -> prepare("SELECT * FROM orders WHERE executor is null or executor = ''");
     $stmp -> execute();
     while ($row = $stmp -> fetch()){
         ?>
@@ -23,7 +23,7 @@
                         <p>
                             <input type="number" name="add_zakaz" value = "<?php echo($row['id']) ?>" id="dlya_vizova_funczii">
                         </p>
-                        <p><input type="submit"></p>                        
+                        <p><input type="submit" value="Взять заказ"></p>                        
                    </form>
                </div>
             </div>
