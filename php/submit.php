@@ -20,5 +20,13 @@
     if ($_POST['vizov_funczii'] == 'vzyat_zakaz'){
         vzyat_zakaz();
     }
-    
+    if ($_POST['vizov_funczii'] == 'redactirovat_zakaz'){
+        redactirovat_zakaz();
+    }
+    if ($_POST['vizov_funczii'] == 'find_price'){
+        find_price();
+    } 
+    if ($_POST['vizov_funczii'] == 'add_price'){
+        add_price();
+    }  
 ?>

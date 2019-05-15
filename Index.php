@@ -57,8 +57,8 @@
                 else if ($_SESSION['role'] == 0){
                     ?>
                         <div id="dobavit_polzovatelya" class="functions ssilka">Добавить пользователя</div>
-                        <div Id="redactirovat_zakaz" class="functions ssilka roles">Редактировать заказ</div>
-                        <div class="functions ssilka roles">ПРИВЕТ ИЗ ДРУГОГО ОКНА</div>
+                        <div id="redactirovat_zakaz" class="functions ssilka roles">Редактировать заказ</div>
+                        <div id="price"class="functions ssilka roles">Прайс-лист</div>
                     <?php
                 }
 
@@ -207,6 +207,10 @@
             $('#moi_zakazi').click(function(){
                 $url = 'php/moi_zakazi.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
+            })
+            $('#price').click(function(){
+                $url = 'php/price.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
             })            
             $('#dallee').click(function(){
                 $url = 'php/here_i_can_test_php_scripts.php';
@@ -226,13 +230,13 @@
                 JQERY4UUU.skritie_knopol($count);
                 
             })
-        });
-            $(document).scroll(function(){
-                if($(this).scrollTop() != 0){
-//                    document.getElementById('contaner-header').style.position = 'fixed';
- 
-                }
-            })
+        })
+//            $(document).scroll(function(){
+//                if($(this).scrollTop() != 0){
+////                    document.getElementById('contaner-header').style.position = 'fixed';
+// 
+//                }
+//            })
 //        $(document).ready(function(){
 //            $('.sozdat_zakaz').click(function(){
 //                $url = 'php/sozdat_zakaz.php';
