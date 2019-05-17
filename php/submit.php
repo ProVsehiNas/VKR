@@ -28,5 +28,8 @@
     } 
     if ($_POST['vizov_funczii'] == 'add_price'){
         add_price();
-    }  
+    }
+    if ($_POST['vizov_funczii'] == 'add_remont'){
+        add_remont();
+    } 
 ?>
