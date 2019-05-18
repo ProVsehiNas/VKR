@@ -9,7 +9,7 @@
 <form action="" method="post" id="ajax_form">
     <!--**** save_user.php - это адрес обработчика.  То есть, после нажатия на кнопку "Зарегистрироваться", данные из полей  отправятся на страничку save_user.php методом "post" ***** -->
 <p>
-    <input type="text" name="vizov_funczii" value = "sozdat_zakaz" id="dlya_vizova_funczii">
+    <input type="text" name="vizov_funczii" value = "dobavit_polzovatelya" id="dlya_vizova_funczii">
 </p>    
 <p>
     <label>Логин пользователя:<br></label>
@@ -19,7 +19,6 @@
 <p>
     <label>Его пароль:<br></label>
     <input name="password" type="password" size="15" maxlength="15">
-<!--
 </p>
 <p>
     <label>Имя:<br></label>
@@ -42,11 +41,13 @@
     <input name="phone_number" type="text" size="15" maxlength="15">
 </p>
 <p>
+    <label>Email</label>
+    <input name="email" type="text" size="15" maxlength="15">
+</p>
+<p>
     <label>Место проживания:<br></label>
     <input name="place_of_live" type="text" size="30" maxlength="30">
 </p>
-
-**** В поле для паролей (name="password" type="password") пользователь вводит свой пароль *****  
 <p>
     <label>Его должность:<br></label>
     <select name="role">
@@ -56,12 +57,10 @@
         <option value="3">Специалист</option>
     </select>
 </p>
--->
-<!--**** В поле для паролей (name="password" type="password") пользователь вводит свой пароль ***** --> 
 <p><br>
     <input type="submit" value="Зрегестрировать пользоватлея" id="btn" name="sozdat_zakaz">
-<!--**** Кнопочка (type="submit") отправляет данные на страничку save_user.php ***** --> 
-</p></form>
+</p>
+</form>
 </div>
 <script>
     $(document).ready(function() {

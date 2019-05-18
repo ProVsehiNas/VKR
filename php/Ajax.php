@@ -34,4 +34,12 @@
         $stmt -> execute();
         echo('Услуга удалена. ');
     }
+    if($_POST['action'] == 'vidat_zakaz'){
+        include ("connect_to_bd.php");
+        $id = $_POST['id'];
+        $stmp = $dbh -> prepare ("UPDATE orders SET returned = 1 WHERE id = $id");
+        $stmp -> execute();
+        echo('Успешно. ');
+        
+    }
 ?>

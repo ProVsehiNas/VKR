@@ -15,11 +15,13 @@
 
 
 
-    function sozdat_zakaz(){
+    function dobavit_polzovatelya(){
+//        var_dump($_POST);
         if (isset($_POST['login'])) { $login = $_POST['login']; if ($login == '') { unset($login);} }
         if (isset($_POST['password'])) { $password=$_POST['password']; if ($password =='') { unset($password);} }
+        if (isset($_POST['role'])) { $role=$_POST['role']; if ($role =='') { unset($role);} }     
 
-        if (empty($login) or empty($password)) //если пользователь не ввел логин или пароль, то выдаем ошибку и останавливаем скрипт
+        if (empty($login) or empty($password) or empty($role)) //если пользователь не ввел логин или пароль, то выдаем ошибку и останавливаем скрипт
         {
             exit ("Вы ввели не всю информацию, вернитесь назад и заполните все поля!");
         }
@@ -41,9 +43,10 @@
             }
         }
         try {
-        $stmt = $dbh->prepare("INSERT INTO users (login, password) VALUES (?, ?)");
+        $stmt = $dbh->prepare("INSERT INTO users (login, password, role) VALUES (?, ?, ?)");
         $stmt->bindParam(1, $login);
         $stmt->bindParam(2, $password);
+        $stmt->bindParam(3, $role);     
         $stmt->execute();
         echo ("Вы успешно зарегистрированы!");
         $dbh = null;
@@ -299,9 +302,10 @@
                     url: 'php/Ajax.php',
                     data:{action:'call_this', cost: $('#cost'+$id).val(), id: $id},
                     success:function(response) {
-                        if (window.confirm(response +'Вернуться на главную?')) 
-                        { window.location.href='http://localhost/vkr/index.php';
-                        };
+//                        if (window.confirm(response +'Вернуться на главную?')) 
+//                        { window.location.href='http://localhost/vkr/index.php';
+//                        };
+                            $('body, html').animate({scrollTop: position_of_scroll}, 500);
                         }
                     });
                 }

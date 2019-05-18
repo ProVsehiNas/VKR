@@ -1,7 +1,9 @@
 <?php
+    echo (var_dump($_POST));
     if (isset($_POST['login'])) { $login = $_POST['login']; if ($login == '') { unset($login);} }
     if (isset($_POST['password'])) { $password=$_POST['password']; if ($password =='') { unset($password);} }
-
+    if (isset($_POST['role'])) { $role=$_POST['role']; if ($role =='') { unset($role);} }    
+    
     if (empty($login) or empty($password)) //если пользователь не ввел логин или пароль, то выдаем ошибку и останавливаем скрипт
     {
         exit ("Вы ввели не всю информацию, вернитесь назад и заполните все поля!");
@@ -14,7 +16,7 @@
  //удаляем лишние пробелы
     $login = trim($login);
     $password = trim($password);
-    include ("db.php");
+    include ("connect_to_bd.php");
     $stmt = $dbh->prepare("SELECT id FROM users where login = ?");
     if ($stmt->execute(array($_POST['login']))) {
         while ($row = $stmt->fetch()) {
@@ -24,11 +26,12 @@
         }
     }
     try {
-    $stmt = $dbh->prepare("INSERT INTO users (login, password) VALUES (?, ?)");
+    $stmt = $dbh->prepare("INSERT INTO users (login, password, role) VALUES (?, ?, ?)");
     $stmt->bindParam(1, $login);
     $stmt->bindParam(2, $password);
+    $stmt->bindParam(3, $role);    
     $stmt->execute();
-    echo ("Вы успешно зарегистрированы!");
+    echo ("Пользователь успешно зарегестрирован! ");
     $dbh = null;
     }
     catch(PDOException $e){

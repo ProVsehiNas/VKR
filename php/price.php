@@ -46,6 +46,7 @@ session_start();
 
         success: function(data){
             $('#box-4').html(data);
+//            window.location.reload();
         },
     	error: function(response) { // Данные не отправлены
             alert('Данные не отправлены. Обратитесь к сисистемному администратору');

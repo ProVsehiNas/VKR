@@ -11,8 +11,8 @@
 //    if ($_POST['sozdat_zakaz'] == 'Зрегестрировать пользоватлея'){
 //        sozdat_zakaz();
 //    }
-    if ($_POST['vizov_funczii'] == 'sozdat_zakaz'){
-        sozdat_zakaz();
+    if ($_POST['vizov_funczii'] == 'dobavit_polzovatelya'){
+        dobavit_polzovatelya();
     }
     if ($_POST['vizov_funczii'] == 'make_order'){
         make_order();

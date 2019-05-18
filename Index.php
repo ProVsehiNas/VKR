@@ -34,14 +34,14 @@
                 </a>
             </div>
             <div class="box-styles">
-                <a href="http://localhost/vkr/index.php">
+                <a href="http://localhost/vkr/index.php" onclick="back_to_index()">
                     <div class='ssilka'>Назад</div>
                 </a>
             </div>
         </div>
         <div id="header-box3" class="box-styles">
 <!--            <a href="#">-->
-                <div id="go" class="ssilka goy">Вход</div>
+                <div id="go" class="ssilka goy" onclick="back_to_index()">Вход</div>
 <!--            </a>-->
         </div>
     </div>
@@ -65,6 +65,7 @@
                 else if ($_SESSION['role'] == 1){
                     ?>
                         <div id="sozdat_zakaz" class="functions ssilka">Создать заказ</div>
+                        <div id="vidat_zakaz" class="functions ssilka">Готовые заказы</div>
                     <?php
                 }
                 else if ($_SESSION['role'] == 2){
@@ -211,7 +212,13 @@
             $('#price').click(function(){
                 $url = 'php/price.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
-            })            
+                sessionStorage.setItem('ssilka', 2);
+            })
+            $('#vidat_zakaz').click(function(){
+                $url = 'php/vidat_zakaz.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+                sessionStorage.setItem('ssilka', 1);
+            })             
             $('#dallee').click(function(){
                 $url = 'php/here_i_can_test_php_scripts.php';
                 $name_of_method = 'news';
@@ -231,6 +238,23 @@
                 
             })
         })
+        var position_of_scroll = $(document).scrollTop();
+        function back_to_index(){
+            sessionStorage.setItem('ssilka', 0);
+            $('body, html').animate({scrollTop: position_of_scroll+30}, 500)
+            
+        }
+        //сохранение положения страниц это кал
+        if(sessionStorage.getItem('ssilka') == 1){
+            $urll ='php/vidat_zakaz.php';
+            JQUERY4U.Ispolzovanie_funczii($urll);
+//            sessionStorage.setItem('ssilka', 0);
+        }
+        if(sessionStorage.getItem('ssilka') == 2){
+            $urll ='php/price.php';
+            JQUERY4U.Ispolzovanie_funczii($urll);
+//            sessionStorage.setItem('ssilka', 0);
+        }
 //            $(document).scroll(function(){
 //                if($(this).scrollTop() != 0){
 ////                    document.getElementById('contaner-header').style.position = 'fixed';
