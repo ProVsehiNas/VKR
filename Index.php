@@ -57,7 +57,7 @@
                 else if ($_SESSION['role'] == 0){
                     ?>
                         <div id="dobavit_polzovatelya" class="functions ssilka">Добавить пользователя</div>
-                        <div id="redactirovat_zakaz" class="functions ssilka roles">Редактировать заказ</div>
+                        <div id="spisok_users" class="functions ssilka roles">Список пользователей</div>
                         <div id="price"class="functions ssilka roles">Прайс-лист</div>
                     <?php
                 }
@@ -188,7 +188,9 @@
 //        if($count == 0){$('#Nazad').fadeOut()}else{$('#dallee').fadeIn();}
 //        Функции нажатия на кнопочки
         $(document).ready(function(){
-            
+            $(window).scroll(function(){
+                var position_of_scroll = $(document).scrollTop();
+            })
             $('#dobavit_polzovatelya').click(function(){
                 $url = 'php/sozdat_zakazREGHERE.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
@@ -218,6 +220,11 @@
                 $url = 'php/vidat_zakaz.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
                 sessionStorage.setItem('ssilka', 1);
+            })
+            $('#spisok_users').click(function(){
+                $url = 'php/list_of_users.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+                sessionStorage.setItem('ssilka', 'spisok_users');
             })             
             $('#dallee').click(function(){
                 $url = 'php/here_i_can_test_php_scripts.php';
@@ -238,10 +245,10 @@
                 
             })
         })
-        var position_of_scroll = $(document).scrollTop();
+//        var position_of_scroll = $(document).scrollTop();
         function back_to_index(){
             sessionStorage.setItem('ssilka', 0);
-            $('body, html').animate({scrollTop: position_of_scroll+30}, 500)
+//            $('body, html').animate({scrollTop: position_of_scroll+30}, 500);
             
         }
         //сохранение положения страниц это кал
@@ -252,6 +259,11 @@
         }
         if(sessionStorage.getItem('ssilka') == 2){
             $urll ='php/price.php';
+            JQUERY4U.Ispolzovanie_funczii($urll);
+//            sessionStorage.setItem('ssilka', 0);
+        }
+        if(sessionStorage.getItem('ssilka') == 'spisok_users'){
+            $urll ='php/list_of_users.php';
             JQUERY4U.Ispolzovanie_funczii($urll);
 //            sessionStorage.setItem('ssilka', 0);
         }

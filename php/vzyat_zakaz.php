@@ -1,6 +1,6 @@
 <?php
     include("connect_to_bd.php");
-    $stmp = $dbh -> prepare("SELECT * FROM orders WHERE executor is null or executor = ''");
+    $stmp = $dbh -> prepare("SELECT * FROM orders WHERE executor is null or executor = '' or finished is null");
     $stmp -> execute();
     while ($row = $stmp -> fetch()){
         ?>

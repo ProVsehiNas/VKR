@@ -42,4 +42,12 @@
         echo('Успешно. ');
         
     }
+        if($_POST['action'] == 'delete_user'){
+        include ("connect_to_bd.php");
+        $id = $_POST['id'];
+        $stmp = $dbh -> prepare ("DELETE FROM users WHERE id = $id");
+        $stmp -> execute();
+        echo('Успешно. ');
+        
+    }
 ?>

@@ -52,9 +52,9 @@
     <label>Его должность:<br></label>
     <select name="role">
         <option selected disabled>Выберите должность</option>
-        <option value="1">Директор</option>
-        <option value="2">Администратор</option>
-        <option value="3">Специалист</option>
+        <option value="1">Администратор</option>
+        <option value="2">Специалист</option>
+        <option value="3">Директор</option>
     </select>
 </p>
 <p><br>

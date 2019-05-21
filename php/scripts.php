@@ -278,24 +278,24 @@
         while($row = $stmt->fetch()){
             ?>
                 <div class="orders">
-                    <div>
+                    <div style="height: auto;padding:5px;flex:1;">
                        <?php echo($row['name']); ?> 
                     </div>
-                    <div>
+                    <div style="height: auto;padding:5px;flex:1;">
                         <input type="number" value="<?php echo($row['cost']); ?>" name=
                         "cost" id="cost<?php echo($row['id']); ?>"> р.
                     </div>
-                    <div>
+                    <div style="height: auto;padding:5px;flex:1;">
                         <a href="#" onclick="myAjax(<?php echo($row['id']); ?>)">Изменить</a> 
                     </div>
-                    <div>
+                    <div style="height: auto;padding:5px;flex:1;">
                         <a href='#' onclick="myAjax_delete(<?php echo($row['id']); ?>)">Удалить</a>
                     </div>
                 </div>
             <?php  
         }
         ?>
-            <script>
+            <script>                 
                 function myAjax($id){
                     $.ajax({
                     type: "POST",
@@ -305,7 +305,7 @@
 //                        if (window.confirm(response +'Вернуться на главную?')) 
 //                        { window.location.href='http://localhost/vkr/index.php';
 //                        };
-                            $('body, html').animate({scrollTop: position_of_scroll}, 500);
+//                            $('body, html').animate({scrollTop: position_of_scroll}, 500);
                         }
                     });
                 }
@@ -315,7 +315,8 @@
                            url: 'php/Ajax.php',
                            data:{action:'delete_price', id: $id},
                            success:function(html) {
-                             alert(html);
+//                             alert(html);
+                            window.location.reload();
                            }
 
                       });

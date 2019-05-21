@@ -53,7 +53,7 @@ body {
     margin-top: 10px;
     margin-bottom: 10px;
     width: 1000px;
-    height: 2000px;
+/*    height: 2000px;*/
 }
 
 .box-styles {
@@ -317,12 +317,14 @@ img{
 
 .orders {
     display: flex;
-    height: 60px;
+/*    height: 60px;*/
+    height: auto;
 /*    widows: 100%;*/
     flex-direction: row;
     background-color: aqua;
     margin-bottom: 10px;
     background-color: #c7e2e2;
+/*    align-items: center;*/
 }
 
 .orders>div{

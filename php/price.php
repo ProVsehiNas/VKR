@@ -55,5 +55,5 @@ session_start();
  	  });
     }
     }
-    NEWNAMESPACE.sendAjaxForm('box-4', 'find_price', 'php/submit.php');    
+    NEWNAMESPACE.sendAjaxForm('box-4', 'find_price', 'php/submit.php');
 </script>
