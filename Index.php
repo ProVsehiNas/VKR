@@ -15,40 +15,60 @@
 </head>
 <body>
 <!--    <div class="hidden" data-save_news='<?= $save_news ?>'></div>-->
-    <img id="logos" src="images/Top.png" alt="">
+<!--    <img id="logos" src="images/Top.png" alt="">-->
+   <div></div>
     <div id="container-header">
         <div id="header-box1" class="box-styles">
 <!--            <a href="#" id="test">-->
-                <div id="go" class="ssilka goy"><p>ЛОГО</p>ЛОГО</div>
+                <div id="go" class="ssilka goy">
+                    <?php
+                        if(empty($_SESSION['login']) or empty($_SESSION['id'])){
+                            echo "Вы не вошли на сайт";
+                        }else{
+                            if($_SESSION['role'] == 0){
+                                $role_name = 'Директор';
+                            }else if($_SESSION['role'] == 1){
+                                $role_name = 'Администратор';
+                            }else if($_SESSION['role'] == 2){
+                                $role_name = 'Специалист';
+                            }else if($_SESSION['role'] == 3){
+                                $role_name = 'Директор офиса';
+                            }
+                            echo $_SESSION['login'].", ".$role_name;
+                        }
+                    ?>
+                </div>
 <!--            </a>-->
         </div>
         <div id="header-box2" class="box-styles">
             <div class="box-styles">
                 <a href="http://localhost/vkr/php/session_destroy.php">
-                    <div id='button_destroy' class='ssilka'>Выход из сессии</div>
+                    <div id='button_destroy' class='ssilka header-menu'>Выход из сессии</div>
                 </a>
             </div>
             <div class="box-styles">
-                <a href="#">
+                <a href="#" class="header-menu">
                     <div class="ssilka">Профиль</div>
                 </a>
             </div>
             <div class="box-styles">
-                <a href="http://localhost/vkr/index.php" onclick="back_to_index()">
+                <a href="http://localhost/vkr/index.php" onclick="back_to_index()" class="header-menu">
                     <div class='ssilka'>Назад</div>
                 </a>
             </div>
         </div>
         <div id="header-box3" class="box-styles">
 <!--            <a href="#">-->
-                <div id="go" class="ssilka goy" onclick="back_to_index()">Вход</div>
+                <div id="go" class="ssilka goy" onclick="back_to_index()" class="header-menu">Вход</div>
 <!--            </a>-->
         </div>
     </div>
     <div id="container-content">
+<!--
         <div id="box-1" class="box-styles">
             1
         </div>
+-->
         <div id="box-2" class="box-styles">
             <?php
                 if (empty($_SESSION['login'])){
@@ -57,8 +77,13 @@
                 else if ($_SESSION['role'] == 0){
                     ?>
                         <div id="dobavit_polzovatelya" class="functions ssilka">Добавить пользователя</div>
+                        <div id="dobavit_office" class="functions ssilka">Добавить офис</div>
                         <div id="spisok_users" class="functions ssilka roles">Список пользователей</div>
+                        <div id="spisok_offices" class="functions ssilka roles">Список офисов</div>
                         <div id="price"class="functions ssilka roles">Прайс-лист</div>
+                        <div id="information"class="functions ssilka roles">Информация</div>
+                        <div id="add_news"class="functions ssilka roles">Добавить новость</div>
+                        <div id="spisok_news"class="functions ssilka roles">Список новостей</div>
                     <?php
                 }
 
@@ -66,6 +91,7 @@
                     ?>
                         <div id="sozdat_zakaz" class="functions ssilka">Создать заказ</div>
                         <div id="vidat_zakaz" class="functions ssilka">Готовые заказы</div>
+                        <div id="vidannie_zakazi" class="functions ssilka">Выданные заказы</div>                        
                     <?php
                 }
                 else if ($_SESSION['role'] == 2){
@@ -119,12 +145,22 @@
         }
         else
         {
-            // Если не пусты, то мы выводим ссылку
-            echo "Вы вошли на сайт, как ".$_SESSION['login']."<br><a  href='http://tvpavlovsk.sk6.ru/'>Эта ссылка доступна только  зарегистрированным пользователям</a>";
+            include("php/connect_to_bd.php");
+            $id_office = $_SESSION['office'];
+            $office = $dbh -> prepare("SELECT name_of_office FROM offices WHERE id = $id_office");
+            $office -> execute();
+            if($office -> rowcount() == 0){
+                echo "Вы директор всех офисов";
+            }
+            while($name = $office -> fetch()){
+                    echo $name['name_of_office'];
+            }
         }
     ?>
     
     <script>
+        
+            $('body, html').animate({scrollTop: sessionStorage.getItem('position_of_top')}, 500);     
         //Скрипт выгрузки данных на основании роли
 //        $(document).click(function(){
 //            $.ajax({
@@ -190,10 +226,13 @@
         $(document).ready(function(){
             $(window).scroll(function(){
                 var position_of_scroll = $(document).scrollTop();
+                $('#box-1').text(position_of_scroll);
+                sessionStorage.setItem('position_of_top', position_of_scroll);
             })
             $('#dobavit_polzovatelya').click(function(){
                 $url = 'php/sozdat_zakazREGHERE.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
+                sessionStorage.setItem('ssilka', 'dobavit_polzovatelya');
             })
             $('#redactirovat_zakaz').click(function(){
                 $url = 'php/redactirovat_zakaz.php';
@@ -216,15 +255,30 @@
                 JQUERY4U.Ispolzovanie_funczii($url);
                 sessionStorage.setItem('ssilka', 2);
             })
+            $('#information').click(function(){
+                $url = 'php/information.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+                sessionStorage.setItem('ssilka', 3);
+            })            
             $('#vidat_zakaz').click(function(){
                 $url = 'php/vidat_zakaz.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
                 sessionStorage.setItem('ssilka', 1);
             })
+            $('#vidannie_zakazi').click(function(){
+                $url = 'php/vidannie_zakazi.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+                sessionStorage.setItem('ssilka', 1);
+            })            
             $('#spisok_users').click(function(){
                 $url = 'php/list_of_users.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
                 sessionStorage.setItem('ssilka', 'spisok_users');
+            })       
+            $('#dobavit_office').click(function(){
+                $url = 'php/dobavit_office.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+                sessionStorage.setItem('ssilka', 'dobavit_office');
             })             
             $('#dallee').click(function(){
                 $url = 'php/here_i_can_test_php_scripts.php';
@@ -252,10 +306,9 @@
             
         }
         //сохранение положения страниц это кал
-        if(sessionStorage.getItem('ssilka') == 1){
-            $urll ='php/vidat_zakaz.php';
+        if(sessionStorage.getItem('ssilka') == 'dobavit_polzovatelya'){
+            $urll ='php/sozdat_zakazREGHERE.php';
             JQUERY4U.Ispolzovanie_funczii($urll);
-//            sessionStorage.setItem('ssilka', 0);
         }
         if(sessionStorage.getItem('ssilka') == 2){
             $urll ='php/price.php';

@@ -31,5 +31,11 @@
     }
     if ($_POST['vizov_funczii'] == 'add_remont'){
         add_remont();
-    } 
+    }
+    if ($_POST['vizov_funczii'] == 'dobavit_office'){
+        dobavit_office();
+    }
+    if ($_POST['vizov_funczii'] == 'pribil'){
+        pribil();
+    }
 ?>

@@ -1,20 +1,22 @@
 <?php
+    session_start();
     include("connect_to_bd.php");
-    $stmp = $dbh -> prepare("SELECT * FROM orders WHERE executor is null or executor = '' or finished is null");
-    $stmp -> execute();
+    $stmp = $dbh -> prepare("SELECT orders.id, orders.client, orders.phone_number FROM orders INNER JOIN users ON orders.maked = users.id WHERE ((executor is null) or (executor = '')) and (finished is null) and office = ?");
+    $stmp -> execute(array($_SESSION['office']));
+    if($stmp -> rowcount() == 0){echo('Заказов нет');}
     while ($row = $stmp -> fetch()){
         ?>
             <div class="orders">
-               <div>
+               <div style="height: auto;padding:5px;flex:1;">
                    <h2>Заказ № <?php echo($row['id']) ?></h2>
                </div>
-               <div>
-                   <p>ФИО клиента: <?php echo($row['client']) ?></p>
+               <div style="height: auto;padding:5px;flex:1;">
+                   <p>Модель устройства: <?php echo($row['client']) ?></p>
                </div>
-               <div>
-                   <p>Контактный телефон: <?php echo($row['phone_number']) ?></p>
+               <div style="height: auto;padding:5px;flex:1;">
+                   <p>Неисправность со слов клиента: <?php echo($row['phone_number']) ?></p>
                </div>
-               <div class="button_cli1ck">
+               <div class="button_cli1ck" style="height: auto;padding:5px;flex:1;">
                   Взять заказ <?php echo($row['id']) ?>
                    <form action="php/submit.php" method="post" id="ajax_form">
                         <p>
@@ -23,7 +25,7 @@
                         <p>
                             <input type="number" name="add_zakaz" value = "<?php echo($row['id']) ?>" id="dlya_vizova_funczii">
                         </p>
-                        <p><input type="submit" value="Взять заказ"></p>                        
+                        <p><input type="submit" value="Взять заказ" class="button_click"></p>                        
                    </form>
                </div>
             </div>

@@ -19,9 +19,10 @@
 //        var_dump($_POST);
         if (isset($_POST['login'])) { $login = $_POST['login']; if ($login == '') { unset($login);} }
         if (isset($_POST['password'])) { $password=$_POST['password']; if ($password =='') { unset($password);} }
-        if (isset($_POST['role'])) { $role=$_POST['role']; if ($role =='') { unset($role);} }     
+        if (isset($_POST['role'])) { $role=$_POST['role']; if ($role =='') { unset($role);} }
+        if (isset($_POST['office'])) { $office=$_POST['office']; if ($office =='') { unset($office);} }         
 
-        if (empty($login) or empty($password) or empty($role)) //если пользователь не ввел логин или пароль, то выдаем ошибку и останавливаем скрипт
+        if (empty($login) or empty($password) or empty($role) or empty($office)) //если пользователь не ввел логин или пароль, то выдаем ошибку и останавливаем скрипт
         {
             exit ("Вы ввели не всю информацию, вернитесь назад и заполните все поля!");
         }
@@ -30,9 +31,12 @@
         $login = htmlspecialchars($login);
         $password = stripslashes($password);
         $password = htmlspecialchars($password);
+        $office = stripslashes($office);
+        $office = htmlspecialchars($office);        
      //удаляем лишние пробелы
         $login = trim($login);
         $password = trim($password);
+        $office = trim($office);
         include ("connect_to_bd.php");
         $stmt = $dbh->prepare("SELECT id FROM users where login = ?");
         if ($stmt->execute(array($_POST['login']))) {
@@ -43,12 +47,13 @@
             }
         }
         try {
-        $stmt = $dbh->prepare("INSERT INTO users (login, password, role) VALUES (?, ?, ?)");
+        $stmt = $dbh->prepare("INSERT INTO users (login, password, role, office) VALUES (?, ?, ?, ?)");
         $stmt->bindParam(1, $login);
         $stmt->bindParam(2, $password);
-        $stmt->bindParam(3, $role);     
+        $stmt->bindParam(3, $role);  
+        $stmt->bindParam(4, $office);     
         $stmt->execute();
-        echo ("Вы успешно зарегистрированы!");
+        echo ("Пользователь успешно зарегестрирован зарегистрированы!");
         $dbh = null;
         }
         catch(PDOException $e){
@@ -86,6 +91,8 @@
     }
 
     function vzyat_zakaz(){
+//        var_dump($_POST);
+//        var_dump($_SESSION['id']);
 //        echo  ('podoraz   dsa  ');
 //        echo($_POST['add_zakaz']);
         include ("connect_to_bd.php");
@@ -94,7 +101,7 @@
 //        $stmt -> bindParam(1, $_SESSION['id']);
 //        $stmt -> bindParam(2, $_POST['add_zakaz']);
         $stmt->execute(array($_POST['add_zakaz']));
-        echo ("Заказ успешно принят");
+        echo ("Заказ успешно принят. ");
     }
 
     function redactirovat_zakaz(){
@@ -357,6 +364,90 @@
             $stmp->bindParam(1, $id);
             $stmp->bindParam(2, $remont);
             $stmp->execute();    
+        }
+    }
+
+    function dobavit_office(){
+//        var_dump($_POST);
+        if (isset($_POST['name_of_office'])) { $name_of_office = $_POST['name_of_office']; if ($name_of_office == '') { unset($name_of_office);} }
+        if (isset($_POST['location'])) { $location=$_POST['location']; if ($location =='') { unset($location);} }
+        if (isset($_POST['director_of_office'])) { $director_of_office=$_POST['director_of_office']; if ($director_of_office =='') { unset($director_of_office);} }     
+
+        if (empty($name_of_office) or empty($location) or empty($director_of_office)) //если пользователь не ввел логин или пароль, то выдаем ошибку и останавливаем скрипт
+        {
+            exit ("Вы ввели не всю информацию, вернитесь назад и заполните все поля! ");
+        }
+        //если логин и пароль введены, то обрабатываем их, чтобы теги и скрипты не работали, мало ли что люди могут ввести
+        $name_of_office = stripslashes($name_of_office);
+        $name_of_office = htmlspecialchars($name_of_office);
+        $location = stripslashes($location);
+        $location = htmlspecialchars($location);
+        $director_of_office = stripslashes($director_of_office);
+        $director_of_office = htmlspecialchars($director_of_office);
+     //удаляем лишние пробелы
+        $name_of_office = trim($name_of_office);
+        $location = trim($location);
+        $director_of_office = trim($director_of_office);
+        include ("connect_to_bd.php");
+        $stmt = $dbh->prepare("SELECT id FROM offices where name_of_office = ?");
+        if ($stmt->execute(array($_POST['name_of_office']))) {
+            while ($row = $stmt->fetch()) {
+                if (!empty($row['id'])) {
+                    exit ("Извините, название данного офиса повторяется, пожалуйста, выберите другое название. ");
+                }
+            }
+        }
+        try {
+        $stmt = $dbh->prepare("INSERT INTO offices (name_of_office, location, director) VALUES (?, ?, ?)");
+        $stmt->bindParam(1, $name_of_office);
+        $stmt->bindParam(2, $location);
+        $stmt->bindParam(3, $director_of_office);     
+        $stmt->execute();
+        echo ("Офис успешно создан. ");
+        $dbh = null;
+        }
+        catch(PDOException $e){
+            echo ("Error!: " . $e->getMessage() . "<br/>");
+            die();
+        }        
+    }
+
+    function pribil(){
+        include("connect_to_bd.php");
+        $inf = $dbh -> prepare("SELECT offices.id, offices.name_of_office, COUNT(DISTINCT orders.id) as count, SUM(price.cost) as cost FROM orders LEFT JOIN repairs ON orders.id = repairs.id_remonta LEFT JOIN price ON repairs.id_yslygi = price.id LEFT JOIN users ON orders.executor = users.id LEFT JOIN offices ON users.office = offices.id WHERE orders.returned = 1 GROUP BY offices.id ORDER BY cost DESC");
+        $inf -> execute();
+        while ($row = $inf -> fetch()){
+            $office = $row['id'];
+            ?>
+                <div class="orders"  style="background-color:#FFA500;">
+                    <div>
+                        Офис: <?php echo($row['name_of_office']) ?>
+                    </div>
+                    <div>
+                        Количество выполненых заказов: <?php echo($row['count']) ?>
+                    </div>
+                    <div>
+                        Общая сумма заказов: <?php echo($row['cost']) ?>
+                    </div>
+                </div>
+                <?php
+                    $exec = $dbh -> prepare("SELECT users.login, COUNT(DISTINCT orders.id) as count, SUM(price.cost) as cost FROM users INNER JOIN orders ON users.id = orders.executor INNER JOIN repairs ON orders.id = repairs.id_remonta INNER JOIN price ON repairs.id_yslygi = price.id WHERE orders.returned = 1 AND users.office = $office GROUP BY users.id ORDER BY cost DESC");
+                    $exec -> execute();
+                    while($ray = $exec -> fetch()){
+                ?>
+                <div class="orders">
+                    <div>
+                        Имя: <?php echo($ray['login']); ?>
+                    </div>
+                    <div>
+                        Заказы: <?php echo($ray['count']); ?>
+                    </div>
+                    <div>
+                        Общая сумма заказов: <?php echo($ray['cost']); ?>
+                    </div>
+                </div>
+            <?php
+            }
         }
     }
 ?>

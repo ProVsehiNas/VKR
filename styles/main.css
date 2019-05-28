@@ -7,7 +7,8 @@
 body {
 /*    width: 700px;*/
 /*    margin: auto;*/
-    background-color: rgba(69, 71, 74, 0.66);
+/*    background-color: rgba(69, 71, 74, 0.66);*/
+        background-color: white;
 }
 
 /*медиа свойства - адаптивность*/
@@ -18,7 +19,7 @@ body {
         display: flex;
         flex-direction: row;
         height: 30px;
-        background-color: #FFA500;
+        background-color: #5f5f5f;
         /*обрезает блоки по тексту, прижимает к верху*/
         /*align-items: flex-start;*/
         /*если написано, то дочерние блоки не принимают размер родителя*/
@@ -27,19 +28,23 @@ body {
 /*        justify-content: center;*/
         /*скрывать всё что не помещается в блок*/
         overflow: hidden;
+        color: #d9d9d9;
         /*убирает перенос строк*/
         /*white-space: nowrap;*/
         /*добавляет многоточие*/
         /*text-overflow: ellipsis;*/
     }
 }
+#container-header>a{
+    color: #d9d9d9;
+}
 
 
 .ssilka:hover{
     background-color: yellow;
     cursor: pointer;
-    background-color: #FF8C00;
-    box-shadow: 0 0 10px rgba(0,0,0,0.5);
+    background-color: #4CAF50;
+    box-shadow: 0 0 0 rgba(0,0,0,0.5);
     transition-duration: 0.5s;
     color: white;
 }
@@ -72,13 +77,13 @@ body {
     flex: 3;
     margin-left: 10px;
 /*    height: 1000px;*/
-    background-color: #5f645b;
+/*    background-color: #5f645b;*/
 }
 
 #box-3 {
     flex: 1;
     margin-left: 10px;
-    background-color: #5f645b;
+/*    background-color: #5f645b;*/
 
 }
 
@@ -202,8 +207,9 @@ h1{
 .functions {
     flex-direction: column;
     height: 60px;
-    background-color: #FFA500;
+    background-color: #99ff99;
     margin-bottom: 10px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
 .for_all_windows {
@@ -220,7 +226,7 @@ input{
     padding: 12px 20px;
 /*    margin: 8px 0;*/
     box-sizing: border-box;
-    background-color: #FFA500;
+    background-color: #99FF99;
     border: none;
 }
 
@@ -230,7 +236,7 @@ input[type=text] {
 
 input:focus {
 /*    border: 3px solid #555;*/
-    background-color: #FF8C00;
+    background-color: #4CAF50;
 }
 
 select {
@@ -238,11 +244,11 @@ select {
   padding: 16px 20px;
   border: none;
 /*  border-radius: 4px;*/
-  background-color: #FFA500;
+  background-color: #99ff99;
 }
 
 input[type=button], input[type=submit], input[type=reset] {
-  background-color: #FFA500;
+  background-color: #99ff99;
   border: none;
 /*  color: white;*/
   padding: 16px 32px;
@@ -253,7 +259,7 @@ input[type=button], input[type=submit], input[type=reset] {
 }
 
 input[type=button]:hover, input[type=submit]:hover, input[type=reset]:hover {
-    background-color: #FF8C00;
+    background-color: #4CAF50;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
     transition-duration: 0.5s;
 }
@@ -301,7 +307,7 @@ img{
 
 .button {
     background-color: yellow;
-    background-color: #FFA500;
+    background-color: #99ff99;
 }
 
 .buttons {
@@ -380,4 +386,14 @@ img{
 #content {
     display: flex;
     flex-direction: column;
+}
+
+.son_of_orders {
+    height: auto;
+    padding:5px;
+    flex:1;
+}
+
+.header-menu {
+    color: #d9d9d9;
 }

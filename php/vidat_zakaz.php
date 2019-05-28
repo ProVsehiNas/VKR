@@ -1,8 +1,9 @@
 <?php
+    session_start();
     include("connect_to_bd.php");
-    $stmp = $dbh -> prepare("SELECT * FROM orders WHERE finished = 1 and returned is null");
-    $stmp -> execute();
-
+    $stmp = $dbh -> prepare("SELECT orders.id, orders.client FROM orders INNER JOIN users ON orders.maked = users.id WHERE finished = 1 and returned is null AND office = ?");
+    $stmp -> execute(array($_SESSION['office']));
+    if ($stmp->rowCount() == 0){echo('Нет готовых к выдаче заказов.');}
     while ($row = $stmp -> fetch()){
         $id_remonta = $row['id'];
         $summ = $dbh -> prepare("SELECT SUM(cost) as summ FROM price JOIN repairs ON price.id = repairs.id_yslygi WHERE repairs.id_remonta = $id_remonta");   

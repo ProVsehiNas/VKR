@@ -3,6 +3,9 @@ session_start();
     include("connect_to_bd.php");
     $stmp = $dbh -> prepare("SELECT * FROM orders WHERE executor = ? AND finished is null");
     $stmp -> execute(array($_SESSION['id']));
+    if($stmp->rowcount()== 0){
+        echo('У вас нет принятых заказов');
+    }
     while ($row = $stmp -> fetch()){
         ?>
             <div class="orders">
