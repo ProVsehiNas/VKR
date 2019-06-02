@@ -371,12 +371,12 @@
 //        var_dump($_POST);
         if (isset($_POST['name_of_office'])) { $name_of_office = $_POST['name_of_office']; if ($name_of_office == '') { unset($name_of_office);} }
         if (isset($_POST['location'])) { $location=$_POST['location']; if ($location =='') { unset($location);} }
-        if (isset($_POST['director_of_office'])) { $director_of_office=$_POST['director_of_office']; if ($director_of_office =='') { unset($director_of_office);} }     
+        if (isset($_POST['director_of_office'])) { $director_of_office=$_POST['director_of_office']; if ($director_of_office == '') { unset($director_of_office);} }     
 
-        if (empty($name_of_office) or empty($location) or empty($director_of_office)) //если пользователь не ввел логин или пароль, то выдаем ошибку и останавливаем скрипт
-        {
-            exit ("Вы ввели не всю информацию, вернитесь назад и заполните все поля! ");
-        }
+//        if (empty($name_of_office) or empty($location) or empty($director_of_office)) //если пользователь не ввел логин или пароль, то выдаем ошибку и останавливаем скрипт
+//        {
+//            exit ("Вы ввели не всю информацию, вернитесь назад и заполните все поля! ");
+//        }
         //если логин и пароль введены, то обрабатываем их, чтобы теги и скрипты не работали, мало ли что люди могут ввести
         $name_of_office = stripslashes($name_of_office);
         $name_of_office = htmlspecialchars($name_of_office);
@@ -449,6 +449,161 @@
             <?php
             }
         }
+    }
+
+    function find_news(){
+        include ("connect_to_bd.php");
+        $find = $_POST['find_n'];
+        $stmt = $dbh -> prepare("SELECT * FROM news WHERE article LIKE '%$find%' OR text LIKE '%$find%' ORDER BY date DESC");
+        $stmt -> execute();
+        if ($stmt->rowCount() == 0){
+            //если пользователя с введенным логином не существует
+            exit ("Ничего не найдено");
+        }
+        while($row = $stmt->fetch()){
+            ?>
+                <div class="orders" id="id<?php echo($row['id']); ?>">
+                    <div style="height: auto;padding:5px;flex:1;">
+                       <?php echo($row['id']); ?> 
+                    </div>                   
+                    <div style="height: auto;padding:5px;flex:1;">
+                       <?php echo($row['article']); ?> 
+                    </div>
+                    <div style="height: auto;padding:5px;flex:1;">
+                        <p><?php echo($row['text']); ?></p>
+                    </div>
+                    <div style="height: auto;padding:5px;flex:1;">
+                        <p><?php echo($row['date']); ?></p>
+                    </div>                    
+                    <div style="height: auto;padding:5px;flex:1;">
+                        <a href="#" onclick="myAjax(<?php echo($row['id']); ?>)">Изменить</a> 
+                    </div>
+                    <div style="height: auto;padding:5px;flex:1;">
+                        <a href='#' onclick="myAjax_delete(<?php echo($row['id']); ?>)">Удалить</a>
+                    </div>
+                </div>
+            <?php  
+        }
+        ?>
+            <script>                 
+                function myAjax_delete($id) {
+                    $chlen =    sessionStorage.getItem('position_of_top');
+                      $.ajax({
+                           type: "POST",
+                           url: 'php/Ajax.php',
+                           data:{action:'delete_news', id: $id, chlen: $chlen},
+                           success:function(html) {
+//                             alert(html);
+                            $('#id' + $id).fadeOut();
+//                            window.location.reload();
+                            $('body, html').animate({scrollTop: html}, 500);
+                           }
+
+                      });
+                 }
+            </script>
+        <?php  
+    }
+
+    function add_news(){
+        if (empty($_POST['add_aticle']) or empty($_POST['add_text']))
+        {
+            exit ("Вы ввели не всю информацию, вернитесь назад и заполните все поля!");
+        }
+        //если логин и пароль введены, то обрабатываем их, чтобы теги и скрипты не работали, мало ли что люди могут ввести
+        $_POST['add_aticle'] = stripslashes($_POST['add_aticle']);
+        $_POST['add_aticle'] = htmlspecialchars($_POST['add_aticle']);
+        $_POST['add_text'] = stripslashes($_POST['add_text']);
+        $_POST['add_text'] = htmlspecialchars($_POST['add_text']);        
+        
+        include("connect_to_bd.php");
+        $stmp = $dbh->prepare("INSERT INTO news (article, text) VALUES (?,?)");
+        $stmp -> bindParam(1, $_POST['add_aticle']);
+        $stmp -> bindParam(2, $_POST['add_text']);
+        $stmp -> execute();
+    }
+    
+    function dobavit_polzovatelya_d(){
+        if (isset($_POST['login'])) { $login = $_POST['login']; if ($login == '') { unset($login);} }
+        if (isset($_POST['password'])) { $password=$_POST['password']; if ($password =='') { unset($password);} }
+        if (isset($_POST['role'])) { $role=$_POST['role']; if ($role =='') { unset($role);} }         
+
+        if (empty($login) or empty($password) or empty($role)) //если пользователь не ввел логин или пароль, то выдаем ошибку и останавливаем скрипт
+        {
+            exit ("Вы ввели не всю информацию, вернитесь назад и заполните все поля!");
+        }
+        //если логин и пароль введены, то обрабатываем их, чтобы теги и скрипты не работали, мало ли что люди могут ввести
+        $login = stripslashes($login);
+        $login = htmlspecialchars($login);
+        $password = stripslashes($password);
+        $password = htmlspecialchars($password);      
+     //удаляем лишние пробелы
+        $login = trim($login);
+        $password = trim($password);
+
+        include ("connect_to_bd.php");
+        $stmt = $dbh->prepare("SELECT id FROM users where login = ?");
+        if ($stmt->execute(array($_POST['login']))) {
+            while ($row = $stmt->fetch()) {
+                if (!empty($row['id'])) {
+                    exit ("Извините, введённый вами логин уже зарегистрирован. Введите другой логин.");
+                }
+            }
+        }
+        try {
+        $stmt = $dbh->prepare("INSERT INTO users (login, password, role, office) VALUES (?, ?, ?, ?)");
+        $stmt->bindParam(1, $login);
+        $stmt->bindParam(2, $password);
+        $stmt->bindParam(3, $role);  
+        $stmt->bindParam(4, $_SESSION['office']);     
+        $stmt->execute();
+        echo ("Пользователь успешно зарегестрирован зарегистрированы!");
+        $dbh = null;
+        }
+        catch(PDOException $e){
+            echo ("Error!: " . $e->getMessage() . "<br/>");
+            die();
+        }
+    }
+
+    function information_d(){
+        echo ('ПИДОРАС');
+        include("connect_to_bd.php");
+        $office = $_SESSION['office'];
+        $inf = $dbh -> prepare("SELECT offices.name_of_office, SUM(price.cost) as sumo, COUNT(DISTINCT orders.id) as counto FROM orders INNER JOIN users ON orders.executor = users.id INNER JOIN repairs ON orders.id = repairs.id_remonta INNER JOIN price ON repairs.id_yslygi = price.id INNER JOIN offices ON users.office = offices.id WHERE offices.id = $office GROUP BY offices.id");
+        $inf -> execute();
+        while ($row = $inf -> fetch()){
+            ?>
+                <div class="orders"  style="background-color:#FFA500;">
+                    <div>
+                        Офис: <?php echo($row['name_of_office']) ?>
+                    </div>
+                    <div>
+                        Количество выполненых заказов: <?php echo($row['sumo']) ?>
+                    </div>
+                    <div>
+                        Общая сумма заказов: <?php echo($row['counto']) ?>
+                    </div>
+                </div>
+                <?php
+                    $exec = $dbh -> prepare("SELECT users.login, SUM(price.cost) as summ, COUNT(DISTINCT orders.id) as countt FROM orders INNER JOIN users ON orders.executor = users.id INNER JOIN repairs ON orders.id = repairs.id_remonta INNER JOIN price ON repairs.id_yslygi = price.id WHERE users.office = $office GROUP BY users.id ORDER BY login DESC");
+                    $exec -> execute();
+                    while($ray = $exec -> fetch()){
+                ?>
+                <div class="orders">
+                    <div>
+                        Имя: <?php echo($ray['login']); ?>
+                    </div>
+                    <div>
+                        Заказы: <?php echo($ray['summ']); ?>
+                    </div>
+                    <div>
+                        Общая сумма заказов: <?php echo($ray['countt']); ?>
+                    </div>
+                </div>
+            <?php
+            }
+        }        
     }
 ?>
 

@@ -29,7 +29,7 @@
             $find -> execute();
             while($row = $find -> fetch()){
                 ?>
-                    <option value="<?php echo($row['id']) ?>"><?php echo($row['login']) ?></option>
+                    <option value="<?php echo($row['id']); ?>"><?php echo($row['login']) ?></option>
                 <?php
             }
         ?>

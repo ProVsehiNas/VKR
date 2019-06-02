@@ -38,4 +38,18 @@
     if ($_POST['vizov_funczii'] == 'pribil'){
         pribil();
     }
+    if($_POST['vizov_funczii'] == 'find_news'){
+        find_news();
+    }
+    if($_POST['vizov_funczii'] == 'add_news'){
+        add_news();
+    }
+
+    if($_POST['vizov_funczii'] == 'dobavit_polzovatelya_d'){
+        dobavit_polzovatelya_d();
+    }
+
+    if($_POST['vizov_funczii'] == 'information_d'){
+        information_d();
+    }
 ?>

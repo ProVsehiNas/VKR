@@ -7,16 +7,14 @@
         Должность
     </div>
     <div class="shapka_table_rebonok">
-        Офис
-    </div>
-    <div class="shapka_table_rebonok">
         Функция
     </div>
 </div>
 <?php
     session_start();
     include("connect_to_bd.php");
-    $stmp = $dbh -> prepare("SELECT users.id, users.login, offices.name_of_office, users.role FROM users INNER JOIN offices ON users.office = offices.id WHERE users.role = 1 or users.role = 2 or users.role = 3 ORDER BY users.office ASC");
+    $office = $_SESSION['office'];
+    $stmp = $dbh -> prepare("SELECT users.id, users.login, users.role FROM users INNER JOIN offices ON users.office = offices.id WHERE (users.role = 1 or users.role = 2) AND (office = $office) ORDER BY users.office ASC");
     $stmp -> execute();
     while($row = $stmp -> fetch()){
         ?>
@@ -30,10 +28,7 @@
                         if($row['role'] == 2){ echo 'Специалист'; }
                         if($row['role'] == 3){ echo 'Нач. офиса'; }
                     ?> 
-                </div>                
-                <div style="height: auto;padding:5px;flex:2; text-align: left">
-                   <?php echo($row['name_of_office']) ?> 
-                </div>                
+                </div>                               
                 <div style="height: auto;padding:5px;flex:2; text-align: left">
                     <a href="#" onclick="delete_user(<?php echo($row['id']) ?>)">Удалить</a>
                 </div>            

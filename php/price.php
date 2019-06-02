@@ -1,3 +1,4 @@
+<div style="text-align: center; font-size:30px; padding: 10px;"><h2>ПОЛЬЗОВАТЕЛИ</h2></div>
 <?php
 //    include ("connect_to_bd.php");
 session_start();
@@ -19,7 +20,20 @@ session_start();
                 <input type="submit" value="Добавить" id="btn_add_price">
             </form>
         </div>
-
+<div class="shapka_table">
+    <div class="shapka_table_rebonok">
+        Название
+    </div>
+    <div class="shapka_table_rebonok">
+        Стоимость
+    </div>
+    <div class="shapka_table_rebonok">
+        Изменить
+    </div>
+    <div class="shapka_table_rebonok">
+        Удалить
+    </div>
+</div>
 <div>
         <div id="box-4">
         </div>

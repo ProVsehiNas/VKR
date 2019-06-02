@@ -42,12 +42,42 @@
         echo('Успешно. ');
         
     }
-        if($_POST['action'] == 'delete_user'){
+    if($_POST['action'] == 'delete_user'){
         include ("connect_to_bd.php");
         $id = $_POST['id'];
         $stmp = $dbh -> prepare ("DELETE FROM users WHERE id = $id");
         $stmp -> execute();
-        echo('Успешно. ');
-        
+        echo('Успешно. '); 
+    }
+    if($_POST['action'] == 'delete_news'){
+        include ("connect_to_bd.php");
+        $chlen = $_POST['chlen'];    
+        $id = $_POST['id'];
+        $stmp = $dbh -> prepare ("DELETE FROM news WHERE id = $id");
+        $stmp -> execute();
+        echo $chlen; 
+    }
+    if($_POST['action'] == 'delete_ofice'){
+        include ("connect_to_bd.php");
+        $chlen = $_POST['chlen'];    
+        $id = $_POST['id'];
+        $stmp = $dbh -> prepare ("DELETE FROM offices WHERE id = $id");
+        $stmp -> execute();
+        echo $chlen; 
+    }
+    if($_POST['action'] == 'izmenit_office'){
+        include ("connect_to_bd.php");
+        $id = $_POST['id'];
+        $stmt = $dbh->prepare("UPDATE offices SET director = ? WHERE id = $id"); 
+        $stmt->execute(array($_POST['name']));
+        echo ("Начальник обновлен");  
+    }
+    if($_POST['action'] == 'repair_on'){
+        include ("connect_to_bd.php");
+        $pot = $_POST['pot'];    
+        $id = $_POST['id'];
+        $stmp = $dbh -> prepare ("UPDATE orders SET returned = 3 WHERE id = $id");
+        $stmp -> execute();
+        echo $pot; 
     }
 ?>

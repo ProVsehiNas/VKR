@@ -10,13 +10,21 @@
     <meta charset="UTF-8">
     <link rel="stylesheet" href="styles/main.css">
     <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Pacifico|Ranga&display=swap" rel="stylesheet">
     <script src="scripts/jquery-3.4.0.min.js"></script>
     <script src="scripts/sctipts.js"></script>
 </head>
 <body>
 <!--    <div class="hidden" data-save_news='<?= $save_news ?>'></div>-->
 <!--    <img id="logos" src="images/Top.png" alt="">-->
-   <div></div>
+   <div class="header-logo">
+       <div id="header-logo-left">
+           <a href="#" id="header-logo-left-a">FIX</a><a href="#" style="color: #99ff99">.COM</a>
+       </div>
+       <div id="header-logo-right">
+           <p>МЫ ДЕЛАЕМ ВСЁ, ЧТОБЫ СТАТЬ ЛУЧШИМИ</p>
+       </div>
+   </div>
     <div id="container-header">
         <div id="header-box1" class="box-styles">
 <!--            <a href="#" id="test">-->
@@ -32,7 +40,7 @@
                             }else if($_SESSION['role'] == 2){
                                 $role_name = 'Специалист';
                             }else if($_SESSION['role'] == 3){
-                                $role_name = 'Директор офиса';
+                                $role_name = 'Нач. офиса';
                             }
                             echo $_SESSION['login'].", ".$role_name;
                         }
@@ -65,7 +73,7 @@
     </div>
     <div id="container-content">
 <!--
-        <div id="box-1" class="box-styles">
+        <div id="box-1" class="box-styles" style="position: fixed;">
             1
         </div>
 -->
@@ -82,8 +90,7 @@
                         <div id="spisok_offices" class="functions ssilka roles">Список офисов</div>
                         <div id="price"class="functions ssilka roles">Прайс-лист</div>
                         <div id="information"class="functions ssilka roles">Информация</div>
-                        <div id="add_news"class="functions ssilka roles">Добавить новость</div>
-                        <div id="spisok_news"class="functions ssilka roles">Список новостей</div>
+                        <div id="spisok_news"class="functions ssilka roles">Новости</div>
                     <?php
                 }
 
@@ -98,6 +105,13 @@
                     ?>
                         <div id="vzyat_zakaz" class="functions ssilka">Взять заказ</div>
                         <div id="moi_zakazi" class="functions ssilka">Мои заказы</div>
+                    <?php
+                }
+                else if ($_SESSION['role'] == 3){
+                    ?>
+                        <div id="dobavit_polzovatelya_d" class="functions ssilka">Добавить пользователя</div>
+                        <div id="list_of_users_d" class="functions ssilka">Список пользователей</div>
+                        <div id="information_d" class="functions ssilka">Информация</div>
                     <?php
                 }
             ?>
@@ -279,7 +293,32 @@
                 $url = 'php/dobavit_office.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
                 sessionStorage.setItem('ssilka', 'dobavit_office');
-            })             
+            })
+            $('#spisok_offices').click(function(){
+                $url = 'php/spisok_offices.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+                sessionStorage.setItem('ssilka', 'spisok_offices');
+            })
+            $('#spisok_news').click(function(){
+                $url = 'php/spisok_news.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+                sessionStorage.setItem('ssilka', 'spisok_news');
+            })
+                $('#dobavit_polzovatelya_d').click(function(){
+                $url = 'php/dobavit_polzovatelya_d.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+                sessionStorage.setItem('ssilka', 'dobavit_polzovatelya_d');
+            })
+                $('#list_of_users_d').click(function(){
+                $url = 'php/list_of_users_d.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+                sessionStorage.setItem('ssilka', 'list_of_users_d');
+            })
+                $('#information_d').click(function(){
+                $url = 'php/information_d.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+                sessionStorage.setItem('ssilka', 'information_d');
+            })
             $('#dallee').click(function(){
                 $url = 'php/here_i_can_test_php_scripts.php';
                 $name_of_method = 'news';
@@ -320,6 +359,11 @@
             JQUERY4U.Ispolzovanie_funczii($urll);
 //            sessionStorage.setItem('ssilka', 0);
         }
+        if(sessionStorage.getItem('ssilka') == 'spisok_news'){
+            $urll ='php/spisok_news.php';
+            JQUERY4U.Ispolzovanie_funczii($urll);
+//            sessionStorage.setItem('ssilka', 0);
+        }        
 //            $(document).scroll(function(){
 //                if($(this).scrollTop() != 0){
 ////                    document.getElementById('contaner-header').style.position = 'fixed';

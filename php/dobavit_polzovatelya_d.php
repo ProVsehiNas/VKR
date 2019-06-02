@@ -9,7 +9,7 @@
 <form action="" method="post" id="ajax_form">
     <!--**** save_user.php - это адрес обработчика.  То есть, после нажатия на кнопку "Зарегистрироваться", данные из полей  отправятся на страничку save_user.php методом "post" ***** -->
 <p>
-    <input type="text" name="vizov_funczii" value = "dobavit_polzovatelya" id="dlya_vizova_funczii">
+    <input type="text" name="vizov_funczii" value = "dobavit_polzovatelya_d" id="dlya_vizova_funczii">
 </p>    
 <p>
     <label>Логин пользователя:<br></label>
@@ -54,27 +54,10 @@
         <option selected disabled>Выберите должность</option>
         <option value="1">Администратор</option>
         <option value="2">Специалист</option>
-        <option value="3">Директор</option>
-    </select>
-</p>
-<p>
-    <label>Офис: <br></label>
-    <select name="office">
-        <option selected disabled>Выберите к какому офису принадлежит сотрудник</option>
-        <?php
-            include ('connect_to_bd.php');
-            $find = $dbh -> prepare("SELECT * FROM offices");
-            $find -> execute();
-            while($row = $find -> fetch()){
-                ?>
-                    <option value="<?php echo($row['id']) ?>"><?php echo($row['name_of_office']) ?></option>
-                <?php
-            }
-        ?>
     </select>
 </p>
 <p><br>
-    <input type="submit" value="Зарегестрировать пользоватлея" id="btn" name="sozdat_zakaz">
+    <input type="submit" value="Зарегестрировать пользоватлея" id="btn" name="dob_pol_d">
 </p>
 </form>
 </div>
