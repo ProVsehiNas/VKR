@@ -1,4 +1,4 @@
-<div style="text-align: center; font-size:30px; padding: 10px;"><h2>ПОЛЬЗОВАТЕЛИ</h2></div>
+<div style="text-align: center; font-size:30px; padding: 10px;"><h2>Прайс-лист</h2></div>
 <?php
 //    include ("connect_to_bd.php");
 session_start();

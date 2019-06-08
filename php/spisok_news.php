@@ -1,6 +1,6 @@
 <?php session_start(); ?>
 <div id="content">
-       <div style="text-align: center; font-size:30px; padding: 10px;">Редактора новостей</div>
+       <div style="text-align: center; font-size:30px; padding: 10px;">РЕДАКТОР НОВОСТЕЙ</div>
         <div id='module_find'>
            <form action="" method="post" id="find_news">
                 <input type="text" name="vizov_funczii" value = "find_news" id="dlya_vizova_funczii">     

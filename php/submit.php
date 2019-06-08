@@ -52,4 +52,7 @@
     if($_POST['vizov_funczii'] == 'information_d'){
         information_d();
     }
+    if($_POST['vizov_funczii'] == 'most_popular'){
+        most_popular();
+    }
 ?>

@@ -1,4 +1,5 @@
-<div id="content">
+<div style="text-align: center; font-size:30px; padding: 10px;">ИНФОРМАЦИЯ</div>
+  <div id="content">
    <div id="module_find">
        <form action="" method="post" id="pribil">
            <input type="text" name="vizov_funczii" value="pribil" id="dlya_vizova_funczii">
@@ -14,6 +15,7 @@
 <script>
     $(document).ready(function(){
         $('#btn_find_date').click(function(){
+            alert();
             NEWNAMESPACE.sendAjaxForm('box-5', 'pribil', 'php/submit.php');
             return false;         
         })       

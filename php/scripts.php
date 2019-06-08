@@ -47,11 +47,16 @@
             }
         }
         try {
-        $stmt = $dbh->prepare("INSERT INTO users (login, password, role, office) VALUES (?, ?, ?, ?)");
+        $stmt = $dbh->prepare("INSERT INTO users (login, password, name, second_name, third_name, date_of_birth, phone_number, role, office) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bindParam(1, $login);
         $stmt->bindParam(2, $password);
-        $stmt->bindParam(3, $role);  
-        $stmt->bindParam(4, $office);     
+        $stmt->bindParam(3, $_POST['name']);  
+        $stmt->bindParam(4, $_POST['second_name']);
+        $stmt->bindParam(5, $_POST['third_name']);
+        $stmt->bindParam(6, $_POST['date_of_birth']);
+        $stmt->bindParam(7, $_POST['phone_number']);
+        $stmt->bindParam(8, $role);
+        $stmt->bindParam(9, $office);
         $stmt->execute();
         echo ("Пользователь успешно зарегестрирован зарегистрированы!");
         $dbh = null;
@@ -67,40 +72,47 @@
         
         if (isset($_POST['client'])) { $client = $_POST['client']; if ($client == '') { unset($client);} }
         if (isset($_POST['phone_number'])) { $phone_number=$_POST['phone_number']; if ($phone_number =='') { unset($phone_number);} }
-
-        if (empty($client) or empty($phone_number)) //если пользователь не ввел логин или пароль, то выдаем ошибку и останавливаем скрипт
+        if (isset($_POST['id_of_device'])) { $id_of_device=$_POST['id_of_device']; if ($id_of_device =='') { unset($id_of_device);} }
+        if (isset($_POST['serial_number'])) { $serial_number=$_POST['serial_number']; if ($serial_number =='') { unset($serial_number);} }
+        if (isset($_POST['bags_of_device'])) { $bags_of_device=$_POST['bags_of_device']; if ($bags_of_device =='') { unset($bags_of_device);} }
+        if (isset($_POST['visual_bags'])) { $visual_bags=$_POST['visual_bags']; if ($visual_bags =='') { unset($visual_bags);} }
+        if (empty($client) or empty($phone_number) or empty($id_of_device) or empty($serial_number) or empty($bags_of_device) or empty($visual_bags))
         {
             exit ("Вы ввели не всю информацию, вернитесь назад и заполните все поля!");
         }
-        
         include ("connect_to_bd.php");
         
         try {
-        $stmt = $dbh->prepare("INSERT INTO orders (client, phone_number, maked) VALUES (?, ?, ?)");
+        $stmt = $dbh->prepare("INSERT INTO orders (client, phone_number, id_of_device, serial_number, bags_of_device, visual_bags, maked) VALUES (?, ?, ?, ?, ?, ?, ?)");
         $stmt->bindParam(1, $client);
         $stmt->bindParam(2, $phone_number);
-        $stmt->bindParam(3, $_SESSION['id']);
+        $stmt->bindParam(3, $id_of_device);
+        $stmt->bindParam(4, $serial_number);
+        $stmt->bindParam(5, $bags_of_device);
+        $stmt->bindParam(6, $visual_bags);    
+        $stmt->bindParam(7, $_SESSION['id']);
         $stmt->execute();
         echo ("Заказ успешно создан. ");
         $dbh = null;
+        require_once("print.php");
         }
         catch(PDOException $e){
             echo ("Error!: " . $e->getMessage() . "<br/>");
             die();
         }        
     }
-
+//можно дуалить
     function vzyat_zakaz(){
-//        var_dump($_POST);
+        $id = $_POST['id'];
 //        var_dump($_SESSION['id']);
 //        echo  ('podoraz   dsa  ');
 //        echo($_POST['add_zakaz']);
         include ("connect_to_bd.php");
         $executor = $_SESSION['id'];
-        $stmt = $dbh->prepare("UPDATE orders SET executor = $executor WHERE id = ?"); 
+        $stmt = $dbh->prepare("UPDATE orders SET executor = $executor WHERE orders.id = $id"); 
 //        $stmt -> bindParam(1, $_SESSION['id']);
 //        $stmt -> bindParam(2, $_POST['add_zakaz']);
-        $stmt->execute(array($_POST['add_zakaz']));
+        $stmt->execute();
         echo ("Заказ успешно принят. ");
     }
 
@@ -140,36 +152,37 @@
                                             while($row = $stm -> fetch()){
                                                 ?>
                                    <p>
-                                       ФИО киента: <i><?php echo($row['client']) ?></i>
+                                       Клиент: <i><?php echo($row['client']) ?></i>
                                    </p>
                                    <p>
-                                       Номер телефона клиента: <i><?php echo($row['phone_number']) ?></i>
+                                       Телефон: <i><?php echo($row['phone_number']) ?></i>
                                    </p>
                                    <p>
-                                       Заказ прнят:
+                                       Устр.: <i><?php echo($row['id_of_device']) ?></i>
                                    </p>
                                    <p>
-                                       Неисправность со слов клиента:
+                                       Неиспр.: <i><?php echo($row['bags_of_device']) ?></i>
                                    </p>
                                    <p>
-                                        Комплектность:
-                                   </p>                                                    
+                                        ОТ: <i><?php echo($row['date_of_make']) ?></i>
+                                   </p>                                                                                                               
                                                 <?php
                                             }
                                         ?>
                                         <br><br>
                                    <p style="text-align:center;">
                                       <i>
-                                        <a href="#" onclick="finished(<?php echo ($_POST['id_zakaza']);?>)">Завершить заказ</a>   
+                                        <a href="#" onclick="finished(<?php echo ($_POST['id_zakaza']); ?>)">Завершить заказ</a>   
                                       </i>
-                                   </p>
+                                   </p><?php echo ($row['result_bag']); ?>
                               </div>
                               <div id="add_redactirovanie">
                                   <h2><u>Ход ремонта</u></h2><br>
                                    <form action="" method="post" id="ajax_form1">                                  
                                   <p>
-                                      <label for="">Рузультираующая неисправность:</label>
-                                      <input type="text" name="bags_of_device">
+<!--                                     если пересхнаить запись то прошлая результирующая неисправность будет утеряна-->
+                                      <label for="">Результираующая неисправность:</label>
+                                      <textarea name="bags_of_device" id="" cols="1" rows="4"></textarea>
                                   </p>
                                     <p>
                                         <input type="text" name="vizov_funczii" value = "add_remont" id="dlya_vizova_funczii">
@@ -551,11 +564,16 @@
             }
         }
         try {
-        $stmt = $dbh->prepare("INSERT INTO users (login, password, role, office) VALUES (?, ?, ?, ?)");
+         $stmt = $dbh->prepare("INSERT INTO users (login, password, name, second_name, third_name, date_of_birth, phone_number, role, office) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
         $stmt->bindParam(1, $login);
         $stmt->bindParam(2, $password);
-        $stmt->bindParam(3, $role);  
-        $stmt->bindParam(4, $_SESSION['office']);     
+        $stmt->bindParam(3, $_POST['name']);  
+        $stmt->bindParam(4, $_POST['second_name']);
+        $stmt->bindParam(5, $_POST['third_name']);
+        $stmt->bindParam(6, $_POST['date_of_birth']);
+        $stmt->bindParam(7, $_POST['phone_number']);
+        $stmt->bindParam(8, $role);
+        $stmt->bindParam(9, $_SESSION['office']);     
         $stmt->execute();
         echo ("Пользователь успешно зарегестрирован зарегистрированы!");
         $dbh = null;
@@ -567,7 +585,6 @@
     }
 
     function information_d(){
-        echo ('ПИДОРАС');
         include("connect_to_bd.php");
         $office = $_SESSION['office'];
         $inf = $dbh -> prepare("SELECT offices.name_of_office, SUM(price.cost) as sumo, COUNT(DISTINCT orders.id) as counto FROM orders INNER JOIN users ON orders.executor = users.id INNER JOIN repairs ON orders.id = repairs.id_remonta INNER JOIN price ON repairs.id_yslygi = price.id INNER JOIN offices ON users.office = offices.id WHERE offices.id = $office GROUP BY offices.id");
@@ -604,6 +621,34 @@
             <?php
             }
         }        
+    }
+
+    function most_popular(){
+        echo date('Y-m-d H:i:s');;
+        include ("connect_to_bd.php");
+        $from = $_POST['date_from'];
+        $to = $_POST['date_to'];
+        if($from == null or $to == null){
+            $from = '2019-01-01';
+            $to = '2222-01-01';
+        }
+        $mp = $dbh -> prepare("SELECT price.name, COUNT(repairs.id_yslygi) as counts FROM price INNER JOIN repairs ON price.id = repairs.id_yslygi WHERE date BETWEEN '$from' AND '$to' GROUP BY name ORDER BY counts DESC");
+        $mp -> execute();
+        if($mp -> rowcount() == 0){
+            echo ('В данном промежутке выполненых услуг не было');
+        }
+        while($rows = $mp -> fetch()){
+            ?>
+                <div class="orders">
+                    <div>
+                        Имя: <?php echo($rows['name']); ?>
+                    </div>
+                    <div>
+                        Заказы: <?php echo($rows['counts']); ?>
+                    </div>
+                </div>
+            <?php
+        }
     }
 ?>
 

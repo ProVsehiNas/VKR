@@ -1,5 +1,10 @@
 <?php
     session_start();
+
+    var_dump($_SESSION);
+//    echo(date('Y-m-d'));
+//    $date = date('Y-m-d');
+//echo $date;
 //    $_SESSION['save_news'] = 0;
 //    $save_news = $_SESSION['save_news'];
 ?>
@@ -15,8 +20,6 @@
     <script src="scripts/sctipts.js"></script>
 </head>
 <body>
-<!--    <div class="hidden" data-save_news='<?= $save_news ?>'></div>-->
-<!--    <img id="logos" src="images/Top.png" alt="">-->
    <div class="header-logo">
        <div id="header-logo-left">
            <a href="#" id="header-logo-left-a">FIX</a><a href="#" style="color: #99ff99">.COM</a>
@@ -30,7 +33,7 @@
 <!--            <a href="#" id="test">-->
                 <div id="go" class="ssilka goy">
                     <?php
-                        if(empty($_SESSION['login']) or empty($_SESSION['id'])){
+                        if(!isset($_SESSION['login']) or !isset($_SESSION['id'])){
                             echo "Вы не вошли на сайт";
                         }else{
                             if($_SESSION['role'] == 0){
@@ -50,20 +53,22 @@
         </div>
         <div id="header-box2" class="box-styles">
             <div class="box-styles">
+                <a href="http://localhost/vkr/index.php" onclick="back_to_index()" class="header-menu">
+                    <div class='ssilka'>Назад</div>
+                </a>
+            </div>           
+            <div class="box-styles">
                 <a href="http://localhost/vkr/php/session_destroy.php">
-                    <div id='button_destroy' class='ssilka header-menu'>Выход из сессии</div>
+                    <div id='button_destroy' class='ssilka header-menu'>Выход</div>
                 </a>
             </div>
+<!--
             <div class="box-styles">
                 <a href="#" class="header-menu">
                     <div class="ssilka">Профиль</div>
                 </a>
             </div>
-            <div class="box-styles">
-                <a href="http://localhost/vkr/index.php" onclick="back_to_index()" class="header-menu">
-                    <div class='ssilka'>Назад</div>
-                </a>
-            </div>
+-->
         </div>
         <div id="header-box3" class="box-styles">
 <!--            <a href="#">-->
@@ -72,11 +77,6 @@
         </div>
     </div>
     <div id="container-content">
-<!--
-        <div id="box-1" class="box-styles" style="position: fixed;">
-            1
-        </div>
--->
         <div id="box-2" class="box-styles">
             <?php
                 if (empty($_SESSION['login'])){
@@ -90,6 +90,7 @@
                         <div id="spisok_offices" class="functions ssilka roles">Список офисов</div>
                         <div id="price"class="functions ssilka roles">Прайс-лист</div>
                         <div id="information"class="functions ssilka roles">Информация</div>
+                        <div id="most_popular"class="functions ssilka roles">Популярные услуги</div>
                         <div id="spisok_news"class="functions ssilka roles">Новости</div>
                     <?php
                 }
@@ -116,15 +117,48 @@
                 }
             ?>
         </div>
-        <div id="box-3" class="box-styles">
-           <?php include 'php/news.php';?>
-           <?php $save_news = $_SESSION['save_news'];?>
-           <div class="hidden" data-save_news='<?= $save_news ?>'></div>
-           <div class="block-news"></div>
-        </div>
+        <?php if(empty($_SESSION['login'])){
+                    echo '';}else{
+        ?>
+            <div id="box-3" class="box-styles">
+               <?php include 'php/news.php';?>
+               <?php $save_news = $_SESSION['save_news'];?>
+               <div class="hidden" data-save_news='<?= $save_news ?>'></div>
+               <div class="block-news"></div>
+            </div>
+        <?php
+        }?>
+
     </div>
     <div id="container-bottom">
-        До свидания
+        <div class="con_bot">
+                <?php
+        if (empty($_SESSION['login']) or (!isset($_SESSION['id'])))
+        {
+            //даем перемнной текст// Если пусты, то мы не выводим ссылку
+            echo "Вы вошли на сайт, как гость<br><a href='#'>Эта ссылка  доступна только зарегистрированным пользователям</a>";
+        }
+        else
+        {
+            include("php/connect_to_bd.php");
+            $id_office = $_SESSION['office'];
+            $office = $dbh -> prepare("SELECT name_of_office FROM offices WHERE id = '$id_office'");
+            $office -> execute();
+            if($office -> rowcount() == 0){
+                echo "Вы директор всех офисов";
+            }
+            while($name = $office -> fetch()){
+                    echo $name['name_of_office'];
+            }
+        }
+    ?>
+        </div>
+        <div class="con_bot">
+            <a href="#" id="report">Сообщить об ошибке</a>
+        </div>
+        <div class="con_bot">
+            <a href="#">О нас</a>
+        </div>
     </div>
     
 <!--    кнопка наверх-->
@@ -138,42 +172,35 @@
               <h2>Вход</h2><br><br>
               <form action="php/vhod.php" method="post">
                <p>
-                   Введите логин: <input name="login" type="text" size="15" maxlength="15"> 
-                   Введите пароль:<input name="password" type="password" size="15" maxlength="15">
+                   Введите логин: <input name="login" type="text" size="50" maxlength="50"> 
+                   Введите пароль:<input name="password" type="password" size="50" maxlength="50">
                </p><br>
                <p><input type="submit" name="submit" value="Войти"></p>
               </form>
          </div>
     </div>
     <div id="overlay" style="display: none;"></div><!-- Пoдлoжкa -->
+    <!--    моадьное окно-->
+    <div id="report_form" style="display: none;"><!-- Сaмo oкнo --> 
+        <span id="report_close">X</span> <!-- Кнoпкa зaкрыть --> 
+        <!-- Тут любoе сoдержимoе -->
+         <div id="forma_reporta">
+              <h2>Сообщить об ошибке</h2><br>
+              <form action="php/report.php" method="post">
+               <p>
+                   Введите тему: <input name="tema" type="text" size="" maxlength="50"> 
+                   Опишите проблему: <br>
+                   <textarea name="description" id="" cols="1" rows="4"></textarea>
+               </p>
+               <p><input type="submit" name="submit" value="Отправить"></p>
+              </form>
+         </div>
+    </div>
+    <div id="overlay1" style="display: none;"></div><!-- Пoдлoжкa -->
     
-    <?php
-//        echo('role = '.$_SESSION['role']);
-//        echo $_SESSION['login'];
-//        echo $_SESSION['id'];
-        // Проверяем, пусты ли переменные логина и id пользователя
-        if (empty($_SESSION['login']) or empty($_SESSION['id']))
-        {
-            //даем перемнной текст// Если пусты, то мы не выводим ссылку
-            echo "Вы вошли на сайт, как гость<br><a href='#'>Эта ссылка  доступна только зарегистрированным пользователям</a>";
-        }
-        else
-        {
-            include("php/connect_to_bd.php");
-            $id_office = $_SESSION['office'];
-            $office = $dbh -> prepare("SELECT name_of_office FROM offices WHERE id = $id_office");
-            $office -> execute();
-            if($office -> rowcount() == 0){
-                echo "Вы директор всех офисов";
-            }
-            while($name = $office -> fetch()){
-                    echo $name['name_of_office'];
-            }
-        }
-    ?>
+
     
     <script>
-        
             $('body, html').animate({scrollTop: sessionStorage.getItem('position_of_top')}, 500);     
         //Скрипт выгрузки данных на основании роли
 //        $(document).click(function(){
@@ -240,7 +267,7 @@
         $(document).ready(function(){
             $(window).scroll(function(){
                 var position_of_scroll = $(document).scrollTop();
-                $('#box-1').text(position_of_scroll);
+//                $('#box-1').text(position_of_scroll);
                 sessionStorage.setItem('position_of_top', position_of_scroll);
             })
             $('#dobavit_polzovatelya').click(function(){
@@ -318,6 +345,11 @@
                 $url = 'php/information_d.php';
                 JQUERY4U.Ispolzovanie_funczii($url);
                 sessionStorage.setItem('ssilka', 'information_d');
+            })
+                $('#most_popular').click(function(){
+                $url = 'php/most_popular.php';
+                JQUERY4U.Ispolzovanie_funczii($url);
+                sessionStorage.setItem('ssilka', 'most_popular');
             })
             $('#dallee').click(function(){
                 $url = 'php/here_i_can_test_php_scripts.php';
@@ -412,7 +444,28 @@
                         }
                     );
             });
-        });        
+        });
+        $(document).ready(function() { // вся мaгия пoсле зaгрузки стрaницы
+            $('#report').click( function(event){ // лoвим клик пo ссылки с id="go"
+                event.preventDefault(); // выключaем стaндaртную рoль элементa
+                $('#overlay1').fadeIn(400, // снaчaлa плaвнo пoкaзывaем темную пoдлoжку
+                    function(){ // пoсле выпoлнения предъидущей aнимaции
+                        $('#report_form') 
+                            .css('display', 'block') // убирaем у мoдaльнoгo oкнa display: none;
+                            .animate({opacity: 1, top: '50%'}, 200); // плaвнo прибaвляем прoзрaчнoсть oднoвременнo сo съезжaнием вниз
+                });
+            });
+            /* Зaкрытие мoдaльнoгo oкнa, тут делaем тo же сaмoе нo в oбрaтнoм пoрядке */
+            $('#report_close, #overlay1').click( function(){ // лoвим клик пo крестику или пoдлoжке
+                $('#report_form')
+                    .animate({opacity: 0, top: '45%'}, 200,  // плaвнo меняем прoзрaчнoсть нa 0 и oднoвременнo двигaем oкнo вверх
+                        function(){ // пoсле aнимaции
+                            $(this).css('display', 'none'); // делaем ему display: none;
+                            $('#overlay1').fadeOut(400); // скрывaем пoдлoжку
+                        }
+                    );
+            });
+        });         
 //            });
 //        получаем положение блока и вписываемего в первый p
 //        var p = $( "p:first" );

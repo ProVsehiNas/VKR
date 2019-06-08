@@ -7,6 +7,21 @@
         Должность
     </div>
     <div class="shapka_table_rebonok">
+        Имя
+    </div>
+    <div class="shapka_table_rebonok">
+        Фамилия
+    </div>
+    <div class="shapka_table_rebonok">
+        Отчество
+    </div>
+    <div class="shapka_table_rebonok">
+        Дата рождения
+    </div>
+    <div class="shapka_table_rebonok">
+        Номер телефона
+    </div> 
+    <div class="shapka_table_rebonok">
         Офис
     </div>
     <div class="shapka_table_rebonok">
@@ -16,26 +31,40 @@
 <?php
     session_start();
     include("connect_to_bd.php");
-    $stmp = $dbh -> prepare("SELECT users.id, users.login, offices.name_of_office, users.role FROM users INNER JOIN offices ON users.office = offices.id WHERE users.role = 1 or users.role = 2 or users.role = 3 ORDER BY users.office ASC");
+    $stmp = $dbh -> prepare("SELECT users.id, users.login, users.name, users.second_name, users.third_name, users.date_of_birth, users.phone_number, offices.name_of_office, users.role FROM users INNER JOIN offices ON users.office = offices.id WHERE (users.role = 1 or users.role = 2 or users.role = 3) AND users.vac = 0 ORDER BY users.office ASC");
     $stmp -> execute();
     while($row = $stmp -> fetch()){
         ?>
             <div class="orders">              
-                <div style="height: auto;padding:5px;flex:2; text-align: left">
-                   <?php echo($row['login']) ?> 
+                <div style="height:auto;padding:5px;width:12%; text-align:left;">
+                    <?php echo($row['login']); ?>
                 </div>
-                <div style="height: auto;padding:5px;flex:2; text-align: left">
+                <div style="height:auto;padding:5px;width:11%; text-align:left;">
                    <?php 
                         if($row['role'] == 1){ echo 'Администратор'; }
                         if($row['role'] == 2){ echo 'Специалист'; }
                         if($row['role'] == 3){ echo 'Нач. офиса'; }
                     ?> 
-                </div>                
-                <div style="height: auto;padding:5px;flex:2; text-align: left">
+                </div>
+                <div style="height:auto;padding:5px;width:14%; text-align:left;">
+                    <?php echo($row['name']); ?>
+                </div>
+                <div style="height:auto;padding:5px;width:11%;text-align:left;">
+                    <?php echo($row['second_name']); ?>
+                </div>                                           <div style="height:auto;padding:5px;width:11%; text-align:left;">
+                    <?php echo($row['third_name']); ?>
+                </div>
+                <div style="height:auto;padding:5px;width:11%; text-align:left;">
+                    <?php echo($row['date_of_birth']); ?>
+                </div>  
+                <div style="height:auto;padding:5px;width:10%; text-align:left;">
+                    <?php echo($row['phone_number']); ?>
+                </div>                                      
+                <div style="height:auto;padding:5px;width:10%; text-align:left;">
                    <?php echo($row['name_of_office']) ?> 
                 </div>                
-                <div style="height: auto;padding:5px;flex:2; text-align: left">
-                    <a href="#" onclick="delete_user(<?php echo($row['id']) ?>)">Удалить</a>
+                <div style="height:auto;padding:5px;width:9%; text-align:left;">
+                    <a href="#" onclick="delete_user(<?php echo($row['id']) ?>)">Уволить</a>
                 </div>            
             </div>
             <script>

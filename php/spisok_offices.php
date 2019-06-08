@@ -1,4 +1,5 @@
 <div style="text-align: center; font-size:30px; padding: 10px;">ОФИСЫ</div>
+<div>ОСТОРОЖНО! удаление офисов приводит к удалению всех пользователей првязанных к данному офису.</div>
 <div class="shapka_table">
     <div class="shapka_table_rebonok">
         Название офиса
@@ -16,7 +17,7 @@
    <?php
     session_start();
     include ("connect_to_bd.php");
-    $stmt = $dbh -> prepare("SELECT offices.id, offices.name_of_office,offices.location, users.login FROM offices INNER JOIN users ON offices.director = users.id ORDER BY users.login ASC");
+    $stmt = $dbh -> prepare("SELECT offices.id, offices.name_of_office,offices.location, users.login FROM offices INNER JOIN users ON offices.director = users.id WHERE offices.vac = 0 ORDER BY users.login ASC");
     $stmt -> execute();
     if ($stmt->rowCount() == 0){
         //если пользователя с введенным логином не существует

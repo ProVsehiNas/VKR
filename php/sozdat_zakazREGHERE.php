@@ -1,52 +1,38 @@
 <html>
-    <head>
-<!--        <title>Добавить пользователя</title>-->
-    </head>
 <body>
 <div class="for_all_windows">
-<h2>Добавить пользователя</h2><br>
-<!--Будем работать с ajax-->
+<h2>Добавить пользователя</h2>
 <form action="" method="post" id="ajax_form">
-    <!--**** save_user.php - это адрес обработчика.  То есть, после нажатия на кнопку "Зарегистрироваться", данные из полей  отправятся на страничку save_user.php методом "post" ***** -->
 <p>
     <input type="text" name="vizov_funczii" value = "dobavit_polzovatelya" id="dlya_vizova_funczii">
 </p>    
 <p>
     <label>Логин пользователя:<br></label>
-    <input name="login" type="text" size="15" maxlength="15" placeholder="Введите логин пользователя" required>
+    <input name="login" type="text" size="50" maxlength="50" placeholder="Введите логин пользователя" required>
 </p>
-<!--**** В текстовое поле (name="login" type="text") пользователь вводит свой логин ***** -->
 <p>
     <label>Его пароль:<br></label>
-    <input name="password" type="password" size="15" maxlength="15">
+    <input name="password" type="password" size="50" maxlength="50" placeholder="Введите пароль пользователя" required>
 </p>
 <p>
     <label>Имя:<br></label>
-    <input name="name" type="text" size="15" maxlength="15">
+    <input name="name" type="text" size="50" maxlength="50" placeholder="Введите имя пользователя" required>
 </p>
 <p>
     <label>Фамилия:<br></label>
-    <input name="second_name" type="text" size="15" maxlength="15">
+    <input name="second_name" type="text" size="50" maxlength="50" placeholder="Введите фамилию пользователя" required>
 </p>
 <p>
     <label>Отчество:<br></label>
-    <input name="third_name" type="text" size="15" maxlength="15">
+    <input name="third_name" type="text" size="50" maxlength="50" placeholder="Введите отчество пользователя" required>
 </p>
 <p>
     <label>Дата рождения:<br></label>
-    <input type="date" name="date_of_birth" size="15">
+    <input type="date" name="date_of_birth" size="50" placeholder="Введите дату рождения пользователя" required>
 </p>
 <p>
     <label>Номер телефона:<br></label>
-    <input name="phone_number" type="text" size="15" maxlength="15">
-</p>
-<p>
-    <label>Email</label>
-    <input name="email" type="text" size="15" maxlength="15">
-</p>
-<p>
-    <label>Место проживания:<br></label>
-    <input name="place_of_live" type="text" size="30" maxlength="30">
+    <input name="phone_number" type="text" size="50" maxlength="50" placeholder="Введите номер телефона пользователя" required>
 </p>
 <p>
     <label>Его должность:<br></label>
@@ -63,7 +49,7 @@
         <option selected disabled>Выберите к какому офису принадлежит сотрудник</option>
         <?php
             include ('connect_to_bd.php');
-            $find = $dbh -> prepare("SELECT * FROM offices");
+            $find = $dbh -> prepare("SELECT * FROM offices WHERE vac = 0");
             $find -> execute();
             while($row = $find -> fetch()){
                 ?>

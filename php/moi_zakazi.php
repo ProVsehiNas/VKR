@@ -1,3 +1,18 @@
+<div style="text-align: center; font-size:30px; padding: 10px;">МОИ ЗАКАЗЫ</div>
+<div class="shapka_table">
+    <div class="shapka_table_rebonok">
+        № заказа
+    </div>
+    <div class="shapka_table_rebonok">
+        Модель
+    </div>
+    <div class="shapka_table_rebonok">
+        Неисправность
+    </div>
+    <div class="shapka_table_rebonok">
+        Функция
+    </div>
+</div>
 <?php
 session_start();
     include("connect_to_bd.php");
@@ -10,13 +25,13 @@ session_start();
         ?>
             <div class="orders">
                <div style="height: auto;padding:5px;flex:2;">
-                   <h2>Заказ № <?php echo($row['id']) ?></h2>
+                   <?php echo($row['id']) ?>
                </div>
                <div style="height: auto;padding:5px;flex:2;">
-                   <p>Модель устройства: <?php echo($row['client']) ?></p>
+                   <p><?php echo($row['id_of_device']) ?></p>
                </div>
                <div style="height: auto;padding:5px;flex:2;">
-                   <p>Неисправность со слов клиента: <?php echo($row['phone_number']) ?></p>
+                   <p><?php echo($row['bags_of_device']) ?></p>
                </div>
                <div class="button_cli1ck" style="height: auto;padding:5px;flex:2;">
                    <form action="php/submit.php" method="post" id="ajax_form">
